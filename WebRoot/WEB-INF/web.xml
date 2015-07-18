@@ -26,7 +26,7 @@
 	<!-- map all requests for /main/* to the dispatcher servlet -->
 	<servlet-mapping>
 		<servlet-name>dispatcher</servlet-name>
-		<url-pattern>/*</url-pattern>
+		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 	<!-- Character Encoding filter -->
 	<filter>
