@@ -6,14 +6,17 @@ package com.manicure.keystone.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.manicure.base.service.BaseService;
 import com.manicure.keystone.dao.impl.VentorDaoImpl;
+import com.manicure.keystone.entity.WeatherInfo;
+import com.manicure.keystone.service.iface.IDemoService;
 
 /**
  * @author Barrie
  *
  */
 @Service
-public class DemoService {
+public class DemoService extends BaseService<WeatherInfo> implements IDemoService {
 	
 	@Autowired
 	private VentorDaoImpl ven;

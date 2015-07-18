@@ -29,7 +29,5 @@
 	<!-- 导入基础配置文件 -->
 	<!-- 导入 myBatis 基础配置文件 -->
 	<import resource="mybatis.xml" />
-	<!-- 导入所有 spring 基础配置文件 -->
-	<import resource="classpath*:/com/manicure/**/spring/*.xml" />
 
 </beans>
