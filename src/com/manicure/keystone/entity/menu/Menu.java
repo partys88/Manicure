@@ -3,13 +3,15 @@
  */
 package com.manicure.keystone.entity.menu;
 
+import com.manicure.base.entity.BaseEntity;
+
 /**
  * 菜单
  * 
  * @author Barrie
  *
  */
-public class Menu {
+public class Menu extends BaseEntity {
 	private Button[] button;
 
 	/**

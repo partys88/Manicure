@@ -32,14 +32,21 @@ public class CoreController extends BaseController {
 		String method = request.getMethod();
 		logger.info(method);
 		if ("GET".equals(method)) {
-			logger.info(request.getParameter("signature"));
-			coreService.doGet(request, response);
+			try {
+				logger.info(request.getParameter("signature"));
+				coreService.doGet(request, response);
+			} catch (Exception e) {
+				logger.error(e.getMessage());
+			}
 
 		} else if ("POST".equals(method)) {
-			logger.info(request.getInputStream().toString());
-			coreService.doPost(request, response);
+			try {
+				logger.info(request.getInputStream().toString());
+				coreService.doPost(request, response);
+			} catch (Exception e) {
+				logger.error(e.getMessage());
+			}
 		}
 
 	}
-
 }

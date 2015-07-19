@@ -32,13 +32,12 @@ public class MenuController extends BaseController {
 	CoreService coreService;
 
 	@RequestMapping(value = "/menu/init")
-	public void createMenu(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void create(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		// 调用接口获取access_token
 		AccessToken at = coreService.getAccessToken(APP_ID, APP_SECRET);
 
 		if (null != at) {
-			new ConfigUtil();
 			// 调用接口创建菜单
 			int result = menuMgr.create(ConfigUtil.getJson("menu.json"), at.getToken());
 
