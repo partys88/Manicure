@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50624
 File Encoding         : 65001
 
-Date: 2015-07-19 19:34:51
+Date: 2015-07-19 21:31:20
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -47,6 +47,7 @@ CREATE TABLE `service` (
   `serviceid` int(8) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(20) DEFAULT NULL COMMENT '服务名称',
   `description` varchar(80) DEFAULT NULL COMMENT '服务描述',
+  `sales` bigint(8) unsigned DEFAULT NULL COMMENT '销量',
   `price` decimal(6,2) unsigned DEFAULT NULL COMMENT '服务价格',
   `taketime` int(3) unsigned DEFAULT NULL COMMENT '服务花时',
   `keeptime` int(3) unsigned DEFAULT NULL COMMENT '效果持续时间',
