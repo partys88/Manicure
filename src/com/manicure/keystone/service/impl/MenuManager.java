@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.manicure.keystone.helper;
+package com.manicure.keystone.service.impl;
 
 import java.io.IOException;
 
@@ -11,20 +11,19 @@ import net.sf.json.JSONObject;
 
 import org.springframework.stereotype.Service;
 
-import com.manicure.base.helper.BaseUtil;
 import com.manicure.base.helper.ReadConfig;
+import com.manicure.base.service.BaseService;
 import com.manicure.keystone.service.iface.ICoreService;
 
 /**
- * 公众平台通用接口工具类
- * 
  * @author Barrie
  *
  */
 @Service
-public class InterfaceUtil extends BaseUtil {
+public class MenuManager extends BaseService {
 	// 菜单创建（POST） 限100（次/天）
-	public String menu_create_url = ReadConfig.getProperty("wechat.properties", "url.menu.create");
+	public String menu_create_url = ReadConfig.getProperty("wechat.properties",
+			"url.menu.create");
 
 	@Resource
 	ICoreService coreService;
@@ -39,7 +38,7 @@ public class InterfaceUtil extends BaseUtil {
 	 * @return 0表示成功，其他值表示失败
 	 * @throws IOException
 	 */
-	public int createMenu(JSONObject json, String accessToken) throws IOException {
+	public int create(JSONObject json, String accessToken) {
 		int result = 0;
 
 		// 拼装创建菜单的url

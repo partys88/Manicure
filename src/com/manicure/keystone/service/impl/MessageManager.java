@@ -1,8 +1,9 @@
 /**
  * 
  */
-package com.manicure.keystone.helper;
+package com.manicure.keystone.service.impl;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.Writer;
 import java.util.HashMap;
@@ -14,11 +15,13 @@ import javax.servlet.http.HttpServletRequest;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
+import org.springframework.stereotype.Service;
 
 import com.manicure.keystone.entity.response.Article;
 import com.manicure.keystone.entity.response.MusicMessage;
 import com.manicure.keystone.entity.response.NewsMessage;
 import com.manicure.keystone.entity.response.TextMessage;
+import com.manicure.keystone.service.iface.IMessageManager;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.core.util.QuickWriter;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
@@ -26,12 +29,12 @@ import com.thoughtworks.xstream.io.xml.PrettyPrintWriter;
 import com.thoughtworks.xstream.io.xml.XppDriver;
 
 /**
- * 消息工具类
- * 
  * @author Barrie
  *
  */
-public class MessageUtil {
+@Service
+public class MessageManager implements IMessageManager {
+
 	/**
 	 * 返回消息类型：文本
 	 */
@@ -97,10 +100,11 @@ public class MessageUtil {
 	 * 
 	 * @param request
 	 * @return
+	 * @throws IOException
 	 * @throws Exception
 	 */
 	@SuppressWarnings("unchecked")
-	public static Map<String, String> parseXml(HttpServletRequest request)
+	public Map<String, String> parseXml(HttpServletRequest request)
 			throws Exception {
 		// 将解析结果存储在HashMap中
 		Map<String, String> map = new HashMap<String, String>();
@@ -133,7 +137,7 @@ public class MessageUtil {
 	 *            文本消息对象
 	 * @return xml
 	 */
-	public static String textMessageToXml(TextMessage textMessage) {
+	public String textMessageToXml(TextMessage textMessage) {
 		xstream.alias("xml", textMessage.getClass());
 		return xstream.toXML(textMessage);
 	}
@@ -145,7 +149,7 @@ public class MessageUtil {
 	 *            音乐消息对象
 	 * @return xml
 	 */
-	public static String musicMessageToXml(MusicMessage musicMessage) {
+	public String musicMessageToXml(MusicMessage musicMessage) {
 		xstream.alias("xml", musicMessage.getClass());
 		return xstream.toXML(musicMessage);
 	}
@@ -157,7 +161,7 @@ public class MessageUtil {
 	 *            图文消息对象
 	 * @return xml
 	 */
-	public static String newsMessageToXml(NewsMessage newsMessage) {
+	public String newsMessageToXml(NewsMessage newsMessage) {
 		xstream.alias("xml", newsMessage.getClass());
 		xstream.alias("item", new Article().getClass());
 		return xstream.toXML(newsMessage);
@@ -168,7 +172,7 @@ public class MessageUtil {
 	 * 
 	 * @date 2013-05-19
 	 */
-	private static XStream xstream = new XStream(new XppDriver() {
+	private XStream xstream = new XStream(new XppDriver() {
 		public HierarchicalStreamWriter createWriter(Writer out) {
 			return new PrettyPrintWriter(out) {
 				// 对所有xml节点的转换都增加CDATA标记
@@ -191,4 +195,5 @@ public class MessageUtil {
 			};
 		}
 	});
+
 }

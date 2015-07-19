@@ -16,6 +16,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
@@ -35,8 +36,6 @@ import com.manicure.keystone.entity.AccessToken;
 import com.manicure.keystone.entity.response.Article;
 import com.manicure.keystone.entity.response.NewsMessage;
 import com.manicure.keystone.entity.response.TextMessage;
-import com.manicure.keystone.helper.MessageUtil;
-import com.manicure.keystone.helper.LoginUtil;
 import com.manicure.keystone.service.iface.ICoreService;
 
 /**
@@ -45,6 +44,11 @@ import com.manicure.keystone.service.iface.ICoreService;
  */
 @Service
 public class CoreService extends BaseService implements ICoreService {
+	@Resource
+	LoginManager loginMgr;
+	@Resource
+	MessageManager messageMgr;
+
 	// 与接口配置信息中的Token要一致
 	private String token = "weixinCourse";
 	// 获取access_token的接口地址（GET） 限200（次/天）
@@ -66,7 +70,7 @@ public class CoreService extends BaseService implements ICoreService {
 
 		PrintWriter out = response.getWriter();
 		// 通过检验signature对请求进行校验，若校验成功则原样返回echostr，表示接入成功，否则接入失败
-		if (LoginUtil.checkSignature(token, signature, timestamp, nonce)) {
+		if (loginMgr.checkSignature(token, signature, timestamp, nonce)) {
 			out.print(echostr);
 		}
 		out.close();
@@ -200,11 +204,11 @@ public class CoreService extends BaseService implements ICoreService {
 	 * @param request
 	 * @return
 	 */
-	public static String processRequest(HttpServletRequest request) {
+	public String processRequest1(HttpServletRequest request) {
 		String respMessage = null;
 		try {
 			// xml请求解析
-			Map<String, String> requestMap = MessageUtil.parseXml(request);
+			Map<String, String> requestMap = messageMgr.parseXml(request);
 
 			// 发送方帐号（open_id）
 			String fromUserName = requestMap.get("FromUserName");
@@ -218,16 +222,16 @@ public class CoreService extends BaseService implements ICoreService {
 			textMessage.setToUserName(fromUserName);
 			textMessage.setFromUserName(toUserName);
 			textMessage.setCreateTime(new Date().getTime());
-			textMessage.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_TEXT);
+			textMessage.setMsgType(MessageManager.RESP_MESSAGE_TYPE_TEXT);
 			textMessage.setFuncFlag(0);
 			// 由于href属性值必须用双引号引起，这与字符串本身的双引号冲突，所以要转义
 			textMessage
 					.setContent("欢迎访问<a href=\"http://blog.csdn.net/lyq8479\">柳峰的博客</a>!");
 			// 将文本消息对象转换成xml字符串
-			respMessage = MessageUtil.textMessageToXml(textMessage);
+			respMessage = messageMgr.textMessageToXml(textMessage);
 
 			// 文本消息
-			if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_TEXT)) {
+			if (msgType.equals(MessageManager.REQ_MESSAGE_TYPE_TEXT)) {
 				// 接收用户发送的文本消息内容
 				String content = requestMap.get("Content");
 
@@ -236,7 +240,7 @@ public class CoreService extends BaseService implements ICoreService {
 				newsMessage.setToUserName(fromUserName);
 				newsMessage.setFromUserName(toUserName);
 				newsMessage.setCreateTime(new Date().getTime());
-				newsMessage.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_NEWS);
+				newsMessage.setMsgType(MessageManager.RESP_MESSAGE_TYPE_NEWS);
 				newsMessage.setFuncFlag(0);
 
 				List<Article> articleList = new ArrayList<Article>();
@@ -253,7 +257,7 @@ public class CoreService extends BaseService implements ICoreService {
 					// 设置图文消息包含的图文集合
 					newsMessage.setArticles(articleList);
 					// 将图文消息对象转换成xml字符串
-					respMessage = MessageUtil.newsMessageToXml(newsMessage);
+					respMessage = messageMgr.newsMessageToXml(newsMessage);
 				}
 				// 单图文消息---不含图片
 				else if ("2".equals(content)) {
@@ -269,7 +273,7 @@ public class CoreService extends BaseService implements ICoreService {
 					articleList.add(article);
 					newsMessage.setArticleCount(articleList.size());
 					newsMessage.setArticles(articleList);
-					respMessage = MessageUtil.newsMessageToXml(newsMessage);
+					respMessage = messageMgr.newsMessageToXml(newsMessage);
 				}
 				// 多图文消息
 				else if ("3".equals(content)) {
@@ -296,7 +300,7 @@ public class CoreService extends BaseService implements ICoreService {
 					articleList.add(article3);
 					newsMessage.setArticleCount(articleList.size());
 					newsMessage.setArticles(articleList);
-					respMessage = MessageUtil.newsMessageToXml(newsMessage);
+					respMessage = messageMgr.newsMessageToXml(newsMessage);
 				}
 				// 多图文消息---首条消息不含图片
 				else if ("4".equals(content)) {
@@ -331,7 +335,7 @@ public class CoreService extends BaseService implements ICoreService {
 					articleList.add(article4);
 					newsMessage.setArticleCount(articleList.size());
 					newsMessage.setArticles(articleList);
-					respMessage = MessageUtil.newsMessageToXml(newsMessage);
+					respMessage = messageMgr.newsMessageToXml(newsMessage);
 				}
 				// 多图文消息---最后一条消息不含图片
 				else if ("5".equals(content)) {
@@ -359,7 +363,7 @@ public class CoreService extends BaseService implements ICoreService {
 					articleList.add(article3);
 					newsMessage.setArticleCount(articleList.size());
 					newsMessage.setArticles(articleList);
-					respMessage = MessageUtil.newsMessageToXml(newsMessage);
+					respMessage = messageMgr.newsMessageToXml(newsMessage);
 				}
 			}
 		} catch (Exception e) {
@@ -384,14 +388,14 @@ public class CoreService extends BaseService implements ICoreService {
 	 * @param request
 	 * @return
 	 */
-	public String processRequest1(HttpServletRequest request) {
+	public String processRequest(HttpServletRequest request) {
 		String respMessage = null;
 		try {
 			// 默认返回的文本消息内容
 			String respContent = "请求处理异常，请稍候尝试！";
 
 			// xml请求解析
-			Map<String, String> requestMap = MessageUtil.parseXml(request);
+			Map<String, String> requestMap = messageMgr.parseXml(request);
 
 			// 发送方帐号（open_id）
 			String fromUserName = requestMap.get("FromUserName");
@@ -405,49 +409,50 @@ public class CoreService extends BaseService implements ICoreService {
 			textMessage.setToUserName(fromUserName);
 			textMessage.setFromUserName(toUserName);
 			textMessage.setCreateTime(new Date().getTime());
-			textMessage.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_TEXT);
+			textMessage.setMsgType(MessageManager.RESP_MESSAGE_TYPE_TEXT);
 			textMessage.setFuncFlag(0);
 
 			// 文本消息
-			if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_TEXT)) {
+			if (msgType.equals(MessageManager.REQ_MESSAGE_TYPE_TEXT)) {
 				respContent = "您发送的是文本消息！";
 			}
 			// 图片消息
-			else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_IMAGE)) {
+			else if (msgType.equals(MessageManager.REQ_MESSAGE_TYPE_IMAGE)) {
 				respContent = "您发送的是图片消息！";
 			}
 			// 地理位置消息
-			else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_LOCATION)) {
+			else if (msgType.equals(MessageManager.REQ_MESSAGE_TYPE_LOCATION)) {
 				respContent = "您发送的是地理位置消息！";
 			}
 			// 链接消息
-			else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_LINK)) {
+			else if (msgType.equals(MessageManager.REQ_MESSAGE_TYPE_LINK)) {
 				respContent = "您发送的是链接消息！";
 			}
 			// 音频消息
-			else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_VOICE)) {
+			else if (msgType.equals(MessageManager.REQ_MESSAGE_TYPE_VOICE)) {
 				respContent = "您发送的是音频消息！";
 			}
 			// 事件推送
-			else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_EVENT)) {
+			else if (msgType.equals(MessageManager.REQ_MESSAGE_TYPE_EVENT)) {
 				// 事件类型
 				String eventType = requestMap.get("Event");
 				// 订阅
-				if (eventType.equals(MessageUtil.EVENT_TYPE_SUBSCRIBE)) {
+				if (eventType.equals(MessageManager.EVENT_TYPE_SUBSCRIBE)) {
 					respContent = "谢谢您的关注！";
 				}
 				// 取消订阅
-				else if (eventType.equals(MessageUtil.EVENT_TYPE_UNSUBSCRIBE)) {
+				else if (eventType
+						.equals(MessageManager.EVENT_TYPE_UNSUBSCRIBE)) {
 					// TODO 取消订阅后用户再收不到公众号发送的消息，因此不需要回复消息
 				}
 				// 自定义菜单点击事件
-				else if (eventType.equals(MessageUtil.EVENT_TYPE_CLICK)) {
+				else if (eventType.equals(MessageManager.EVENT_TYPE_CLICK)) {
 					// TODO 自定义菜单权没有开放，暂不处理该类消息
 				}
 			}
 
 			textMessage.setContent(respContent);
-			respMessage = MessageUtil.textMessageToXml(textMessage);
+			respMessage = messageMgr.textMessageToXml(textMessage);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -15,7 +15,7 @@ import net.sf.json.JSONObject;
  * @author Barrie
  *
  */
-public class ReadConfig extends BaseUtil {
+public class ReadConfig {
 	public static JSONObject getJson(String fileName) throws IOException {
 		String path = Thread.currentThread().getContextClassLoader()
 				.getResource("/").getPath();

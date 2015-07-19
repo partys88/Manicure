@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.manicure.base.controller.BaseController;
 import com.manicure.base.helper.ReadConfig;
 import com.manicure.keystone.entity.AccessToken;
-import com.manicure.keystone.helper.InterfaceUtil;
-import com.manicure.keystone.service.iface.ICoreService;
+import com.manicure.keystone.service.impl.CoreService;
+import com.manicure.keystone.service.impl.MenuManager;
 
 /**
  * @author Barrie
@@ -32,9 +32,9 @@ public class CoreController extends BaseController {
 	String appSecret = ReadConfig.getProperty("wechat.properties", "appSecret");;
 
 	@Resource
-	ICoreService coreService;
+	CoreService coreService;
 	@Resource
-	InterfaceUtil ifaceUtil;
+	MenuManager menuMgr;
 
 	@RequestMapping(value = "/core")
 	public void connect(HttpServletRequest request, HttpServletResponse response)
@@ -62,7 +62,7 @@ public class CoreController extends BaseController {
 		if (null != at) {
 			new ReadConfig();
 			// 调用接口创建菜单
-			int result = ifaceUtil.createMenu(
+			int result = menuMgr.create(
 					ReadConfig.getJson("menu.json"), at.getToken());
 
 			// 判断菜单创建结果

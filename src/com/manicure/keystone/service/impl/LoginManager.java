@@ -1,17 +1,22 @@
 /**
  * 
  */
-package com.manicure.keystone.helper;
+package com.manicure.keystone.service.impl;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
+import org.springframework.stereotype.Service;
+
+import com.manicure.keystone.service.iface.ILoginManager;
+
 /**
  * @author Barrie
  *
  */
-public class LoginUtil {
+@Service
+public class LoginManager implements ILoginManager {
 
 	/**
 	 * 验证签名
@@ -21,7 +26,8 @@ public class LoginUtil {
 	 * @param nonce
 	 * @return
 	 */
-	public static boolean checkSignature(String token, String signature,
+	@Override
+	public boolean checkSignature(String token, String signature,
 			String timestamp, String nonce) {
 		String[] arr = new String[] { token, timestamp, nonce };
 		// 将token、timestamp、nonce三个参数进行字典序排序
@@ -77,4 +83,5 @@ public class LoginUtil {
 		String s = new String(tempArr);
 		return s;
 	}
+
 }

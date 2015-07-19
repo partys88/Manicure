@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.manicure.base.controller.BaseController;
 import com.manicure.base.helper.ReadConfig;
-import com.manicure.keystone.helper.InterfaceUtil;
 import com.manicure.keystone.service.iface.ICoreService;
 import com.manicure.keystone.service.iface.IDemoService;
+import com.manicure.keystone.service.impl.MenuManager;
 
 /**
  * 
@@ -30,7 +30,7 @@ public class Demo extends BaseController {
 	@Resource
 	IDemoService demoService;
 	@Resource
-	InterfaceUtil ifaceUtil;
+	MenuManager menuMgr;
 	@Resource
 	ICoreService coreService;
 
