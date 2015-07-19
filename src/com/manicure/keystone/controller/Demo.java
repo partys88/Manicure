@@ -3,11 +3,11 @@
  */
 package com.manicure.keystone.controller;
 
-import java.io.UnsupportedEncodingException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.manicure.base.controller.BaseController;
@@ -29,14 +29,15 @@ public class Demo extends BaseController<WeatherInfo> {
 	public void setDemoService(DemoService demoService) {
 		this.demoService = demoService;
 	}
-	@RequestMapping(value="/list")
-	//@RequestMapping(value="/list",produces = "plain/text; charset=UTF-8") 
+
+	@RequestMapping(value = "/list/{id}/{name}", method = RequestMethod.GET)
 	@ResponseBody
-	public String list() throws UnsupportedEncodingException {
+	public String list(@PathVariable String id, @PathVariable String name) {
 		String rst = demoService.selectList();
+		rst += "{" + id + "}" + "{" + name + "}";
 		logger.info(rst);
-		//System.out.println(new String("阿 dasd ".getBytes("iso8859-1"),"UTF-8"));
-		return demoService.selectList();
+
+		return rst;
 	}
 
 }

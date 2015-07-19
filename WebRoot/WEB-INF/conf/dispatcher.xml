@@ -45,7 +45,7 @@
 			<list>
 				<bean class="org.springframework.web.servlet.view.BeanNameViewResolver" />
 				<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-					<property name="prefix" value="/jsp/" />
+					<property name="prefix" value="/pages/" />
 					<property name="suffix" value=".jsp" />
 				</bean>
 			</list>
