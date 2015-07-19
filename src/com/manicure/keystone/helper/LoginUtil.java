@@ -11,7 +11,7 @@ import java.util.Arrays;
  * @author Barrie
  *
  */
-public class SignUtil {
+public class LoginUtil {
 
 	/**
 	 * 验证签名

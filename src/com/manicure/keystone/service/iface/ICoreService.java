@@ -9,6 +9,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONObject;
+
+import com.manicure.keystone.entity.AccessToken;
+
 /**
  * @author Barrie
  *
@@ -20,4 +24,8 @@ public interface ICoreService {
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException;
 
+	public JSONObject httpRequest(String requestUrl, String requestMethod,
+			String outputStr);
+
+	public AccessToken getAccessToken(String appid, String appsecret);
 }
