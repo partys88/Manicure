@@ -1,7 +1,6 @@
 package com.manicure.base.controller;
 
 
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,8 +10,8 @@ import org.slf4j.LoggerFactory;
  *
  * @param <T>
  */
-public abstract class BaseController<T>  {
-	
+public abstract class BaseController<T> {
+
 	protected Logger logger = LoggerFactory.getLogger(getClass());
-	
+
 }

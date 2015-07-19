@@ -36,7 +36,7 @@ public class Demo extends BaseController<WeatherInfo> {
 		String rst = demoService.selectList();
 		rst += "{" + id + "}" + "{" + name + "}";
 		logger.info(rst);
-
+		logger.error("sdasdasdas啊实打实的");
 		return rst;
 	}
 
