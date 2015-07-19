@@ -46,33 +46,24 @@ public class BaseEntity {
 		try {
 			Class t = this.getClass();
 			Field[] fields = t.getDeclaredFields();
+			sb.append("{");
 			for (int i = 0; i < fields.length; i++) {
 				Field field = fields[i];
 				field.setAccessible(true);
-				sb.append("{");
+				if (i != 0) {
+					sb.append(",");
+				}
+				sb.append("\"");
 				sb.append(field.getName());
-				sb.append(":");
-				if (field.getType() == Integer.class) {
-					sb.append(field.getInt(this));
-				} else if (field.getType() == Long.class) {
-					sb.append(field.getLong(this));
-				} else if (field.getType() == Boolean.class) {
-					sb.append(field.getBoolean(this));
-				} else if (field.getType() == char.class) {
-					sb.append(field.getChar(this));
-				} else if (field.getType() == Double.class) {
-					sb.append(field.getDouble(this));
-				} else if (field.getType() == Float.class) {
-					sb.append(field.getFloat(this));
-				} else
-					sb.append(field.get(this));
-				sb.append("}");
+				sb.append("\":\"");
+				sb.append(field.get(this));
+				sb.append("\"");
 			}
+			sb.append("}");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return sb.toString();
 	}
-
 
 }

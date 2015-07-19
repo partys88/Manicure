@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.manicure.keystone.dao.iface.IVentorDao;
+import com.manicure.keystone.entity.WeatherInfo;
 import com.manicure.keystone.entity.WeatherInfoExample;
 import com.manicure.keystone.mapper.WeatherInfoMapper;
 
@@ -17,8 +18,7 @@ public class VentorDaoImpl implements IVentorDao {
 		// TODO Auto-generated method stub
 		WeatherInfoExample example = new WeatherInfoExample();
 		
-		
-		return map.selectByExample(example).get(0).getaSpaceClo();
+		return map.selectByExample(example).toString();
 	}
 
 }

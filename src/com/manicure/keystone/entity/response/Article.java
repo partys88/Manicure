@@ -3,13 +3,15 @@
  */
 package com.manicure.keystone.entity.response;
 
+import com.manicure.base.entity.BaseEntity;
+
 /**
  * 图文model
  * 
  * @author Barrie
  *
  */
-public class Article {
+public class Article extends BaseEntity{
 	// 图文消息名称
 	private String Title;
 	// 图文消息描述
