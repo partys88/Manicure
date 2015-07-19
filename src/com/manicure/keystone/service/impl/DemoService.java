@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.manicure.base.service.BaseService;
 import com.manicure.keystone.dao.impl.VentorDaoImpl;
-import com.manicure.keystone.entity.WeatherInfo;
 import com.manicure.keystone.service.iface.IDemoService;
 
 /**
@@ -16,7 +15,7 @@ import com.manicure.keystone.service.iface.IDemoService;
  *
  */
 @Service
-public class DemoService extends BaseService<WeatherInfo> implements IDemoService {
+public class DemoService extends BaseService implements IDemoService {
 	
 	@Autowired
 	private VentorDaoImpl ven;

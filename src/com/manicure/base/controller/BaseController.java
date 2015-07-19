@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
  *
  * @param <T>
  */
-public abstract class BaseController<T> {
+public abstract class BaseController {
 
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 

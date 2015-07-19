@@ -7,9 +7,8 @@ import org.slf4j.LoggerFactory;
  * 
  * @author Barrie
  *
- * @param <T>
  */
-public class BaseService<T> {
+public class BaseService {
 
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 

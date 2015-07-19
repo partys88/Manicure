@@ -3,7 +3,8 @@
  */
 package com.manicure.keystone.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,9 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.manicure.base.controller.BaseController;
-import com.manicure.keystone.entity.WeatherInfo;
 import com.manicure.keystone.service.iface.IDemoService;
-import com.manicure.keystone.service.impl.DemoService;
 
 /**
  * 
@@ -22,13 +21,9 @@ import com.manicure.keystone.service.impl.DemoService;
  */
 @Controller
 @RequestMapping(value = "/auth")
-public class Demo extends BaseController<WeatherInfo> {
+public class Demo extends BaseController {
+	@Resource
 	IDemoService demoService;
-
-	@Autowired
-	public void setDemoService(DemoService demoService) {
-		this.demoService = demoService;
-	}
 
 	@RequestMapping(value = "/list/{id}/{name}", method = RequestMethod.GET)
 	@ResponseBody
