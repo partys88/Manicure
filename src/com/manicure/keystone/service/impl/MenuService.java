@@ -11,7 +11,6 @@ import net.sf.json.JSONObject;
 
 import org.springframework.stereotype.Service;
 
-import com.manicure.base.helper.ReadConfig;
 import com.manicure.base.service.BaseService;
 import com.manicure.keystone.service.iface.ICoreService;
 
@@ -20,10 +19,7 @@ import com.manicure.keystone.service.iface.ICoreService;
  *
  */
 @Service
-public class MenuManager extends BaseService {
-	// 菜单创建（POST） 限100（次/天）
-	public String menu_create_url = ReadConfig.getProperty("wechat.properties",
-			"url.menu.create");
+public class MenuService extends BaseService {
 
 	@Resource
 	ICoreService coreService;
@@ -42,7 +38,7 @@ public class MenuManager extends BaseService {
 		int result = 0;
 
 		// 拼装创建菜单的url
-		String url = menu_create_url.replace("ACCESS_TOKEN", accessToken);
+		String url = MENU_CREATE_URL.replace("ACCESS_TOKEN", accessToken);
 		// 将菜单对象转换成json字符串
 		String jsonMenu = json.toString();
 		// 调用接口创建菜单
@@ -51,9 +47,7 @@ public class MenuManager extends BaseService {
 		if (null != jsonObject) {
 			if (0 != jsonObject.getInt("errcode")) {
 				result = jsonObject.getInt("errcode");
-				logger.error("创建菜单失败 errcode:{} errmsg:{}",
-						jsonObject.getInt("errcode"),
-						jsonObject.getString("errmsg"));
+				logger.error("创建菜单失败 errcode:{} errmsg:{}", jsonObject.getInt("errcode"), jsonObject.getString("errmsg"));
 			}
 		}
 

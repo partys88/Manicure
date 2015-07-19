@@ -14,31 +14,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.manicure.base.controller.BaseController;
-import com.manicure.base.helper.ReadConfig;
-import com.manicure.keystone.entity.AccessToken;
 import com.manicure.keystone.service.impl.CoreService;
-import com.manicure.keystone.service.impl.MenuManager;
 
 /**
  * @author Barrie
  *
  */
 @Controller
-@RequestMapping(value = "/api")
+@RequestMapping(value = "/api/keystone")
 public class CoreController extends BaseController {
-	// 第三方用户唯一凭证
-	String appId = ReadConfig.getProperty("wechat.properties", "appId");
-	// 第三方用户唯一凭证密钥
-	String appSecret = ReadConfig.getProperty("wechat.properties", "appSecret");;
 
 	@Resource
 	CoreService coreService;
-	@Resource
-	MenuManager menuMgr;
 
 	@RequestMapping(value = "/core")
-	public void connect(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public void connect(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String method = request.getMethod();
 		logger.info(method);
 		if ("GET".equals(method)) {
@@ -52,25 +42,4 @@ public class CoreController extends BaseController {
 
 	}
 
-	@RequestMapping(value = "/core/menu")
-	public void createMenu(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-
-		// 调用接口获取access_token
-		AccessToken at = coreService.getAccessToken(appId, appSecret);
-
-		if (null != at) {
-			new ReadConfig();
-			// 调用接口创建菜单
-			int result = menuMgr.create(
-					ReadConfig.getJson("menu.json"), at.getToken());
-
-			// 判断菜单创建结果
-			if (0 == result)
-				logger.info("菜单创建成功！");
-			else
-				logger.info("菜单创建失败，错误码：" + result);
-		}
-
-	}
 }

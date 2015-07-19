@@ -9,6 +9,6 @@ import net.sf.json.JSONObject;
  * @author Barrie
  *
  */
-public interface IMenuManager{
+public interface IMenuService{
 	public int create(JSONObject json, String accessToken);
 }

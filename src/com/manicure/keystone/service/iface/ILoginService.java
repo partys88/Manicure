@@ -7,7 +7,7 @@ package com.manicure.keystone.service.iface;
  * @author Barrie
  *
  */
-public interface ILoginManager {
+public interface ILoginService {
 	public boolean checkSignature(String token, String signature,
 			String timestamp, String nonce);
 

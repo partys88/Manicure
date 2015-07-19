@@ -9,14 +9,14 @@ import java.util.Arrays;
 
 import org.springframework.stereotype.Service;
 
-import com.manicure.keystone.service.iface.ILoginManager;
+import com.manicure.keystone.service.iface.ILoginService;
 
 /**
  * @author Barrie
  *
  */
 @Service
-public class LoginManager implements ILoginManager {
+public class LoginService implements ILoginService {
 
 	/**
 	 * 验证签名

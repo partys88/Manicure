@@ -8,7 +8,7 @@ import com.manicure.keystone.entity.response.MusicMessage;
 import com.manicure.keystone.entity.response.NewsMessage;
 import com.manicure.keystone.entity.response.TextMessage;
 
-public interface IMessageManager {
+public interface IMessageService {
 	public Map<String, String> parseXml(HttpServletRequest request)
 			throws Exception;
 

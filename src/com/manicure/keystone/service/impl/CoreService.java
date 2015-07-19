@@ -45,20 +45,14 @@ import com.manicure.keystone.service.iface.ICoreService;
 @Service
 public class CoreService extends BaseService implements ICoreService {
 	@Resource
-	LoginManager loginMgr;
+	LoginService loginMgr;
 	@Resource
-	MessageManager messageMgr;
-
-	// 与接口配置信息中的Token要一致
-	private String token = "weixinCourse";
-	// 获取access_token的接口地址（GET） 限200（次/天）
-	public final String access_token_url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET";
+	MessageService messageMgr;
 
 	/**
 	 * 确认请求来自微信服务器
 	 */
-	public void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 微信加密签名
 		String signature = request.getParameter("signature");
 		// 时间戳
@@ -70,7 +64,7 @@ public class CoreService extends BaseService implements ICoreService {
 
 		PrintWriter out = response.getWriter();
 		// 通过检验signature对请求进行校验，若校验成功则原样返回echostr，表示接入成功，否则接入失败
-		if (loginMgr.checkSignature(token, signature, timestamp, nonce)) {
+		if (loginMgr.checkSignature(TOKEN, signature, timestamp, nonce)) {
 			out.print(echostr);
 		}
 		out.close();
@@ -80,8 +74,7 @@ public class CoreService extends BaseService implements ICoreService {
 	/**
 	 * 处理微信服务器发来的消息
 	 */
-	public void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 将请求、响应的编码均设置为UTF-8（防止中文乱码）
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
@@ -106,8 +99,7 @@ public class CoreService extends BaseService implements ICoreService {
 	 *            提交的数据
 	 * @return JSONObject(通过JSONObject.get(key)的方式获取json对象的属性值)
 	 */
-	public JSONObject httpRequest(String requestUrl, String requestMethod,
-			String outputStr) {
+	public JSONObject httpRequest(String requestUrl, String requestMethod, String outputStr) {
 		JSONObject jsonObject = null;
 		StringBuffer buffer = new StringBuffer();
 		try {
@@ -119,8 +111,7 @@ public class CoreService extends BaseService implements ICoreService {
 			SSLSocketFactory ssf = sslContext.getSocketFactory();
 
 			URL url = new URL(requestUrl);
-			HttpsURLConnection httpUrlConn = (HttpsURLConnection) url
-					.openConnection();
+			HttpsURLConnection httpUrlConn = (HttpsURLConnection) url.openConnection();
 			httpUrlConn.setSSLSocketFactory(ssf);
 
 			httpUrlConn.setDoOutput(true);
@@ -142,10 +133,8 @@ public class CoreService extends BaseService implements ICoreService {
 
 			// 将返回的输入流转换成字符串
 			InputStream inputStream = httpUrlConn.getInputStream();
-			InputStreamReader inputStreamReader = new InputStreamReader(
-					inputStream, "utf-8");
-			BufferedReader bufferedReader = new BufferedReader(
-					inputStreamReader);
+			InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "utf-8");
+			BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 
 			String str = null;
 			while ((str = bufferedReader.readLine()) != null) {
@@ -178,8 +167,7 @@ public class CoreService extends BaseService implements ICoreService {
 	public AccessToken getAccessToken(String appid, String appsecret) {
 		AccessToken accessToken = null;
 
-		String requestUrl = access_token_url.replace("APPID", appid).replace(
-				"APPSECRET", appsecret);
+		String requestUrl = ACCESS_TOKEN_URL.replace("APPID", appid).replace("APPSECRET", appsecret);
 		JSONObject jsonObject = httpRequest(requestUrl, "GET", null);
 		// 如果请求成功
 		if (null != jsonObject) {
@@ -190,9 +178,7 @@ public class CoreService extends BaseService implements ICoreService {
 			} catch (JSONException e) {
 				accessToken = null;
 				// 获取token失败
-				logger.error("获取token失败 errcode:{} errmsg:{}",
-						jsonObject.getInt("errcode"),
-						jsonObject.getString("errmsg"));
+				logger.error("获取token失败 errcode:{} errmsg:{}", jsonObject.getInt("errcode"), jsonObject.getString("errmsg"));
 			}
 		}
 		return accessToken;
@@ -222,16 +208,15 @@ public class CoreService extends BaseService implements ICoreService {
 			textMessage.setToUserName(fromUserName);
 			textMessage.setFromUserName(toUserName);
 			textMessage.setCreateTime(new Date().getTime());
-			textMessage.setMsgType(MessageManager.RESP_MESSAGE_TYPE_TEXT);
+			textMessage.setMsgType(MessageService.RESP_MESSAGE_TYPE_TEXT);
 			textMessage.setFuncFlag(0);
 			// 由于href属性值必须用双引号引起，这与字符串本身的双引号冲突，所以要转义
-			textMessage
-					.setContent("欢迎访问<a href=\"http://blog.csdn.net/lyq8479\">柳峰的博客</a>!");
+			textMessage.setContent("欢迎访问<a href=\"http://blog.csdn.net/lyq8479\">柳峰的博客</a>!");
 			// 将文本消息对象转换成xml字符串
 			respMessage = messageMgr.textMessageToXml(textMessage);
 
 			// 文本消息
-			if (msgType.equals(MessageManager.REQ_MESSAGE_TYPE_TEXT)) {
+			if (msgType.equals(MessageService.REQ_MESSAGE_TYPE_TEXT)) {
 				// 接收用户发送的文本消息内容
 				String content = requestMap.get("Content");
 
@@ -240,7 +225,7 @@ public class CoreService extends BaseService implements ICoreService {
 				newsMessage.setToUserName(fromUserName);
 				newsMessage.setFromUserName(toUserName);
 				newsMessage.setCreateTime(new Date().getTime());
-				newsMessage.setMsgType(MessageManager.RESP_MESSAGE_TYPE_NEWS);
+				newsMessage.setMsgType(MessageService.RESP_MESSAGE_TYPE_NEWS);
 				newsMessage.setFuncFlag(0);
 
 				List<Article> articleList = new ArrayList<Article>();
@@ -264,8 +249,7 @@ public class CoreService extends BaseService implements ICoreService {
 					Article article = new Article();
 					article.setTitle("微信公众帐号开发教程Java版");
 					// 图文消息中可以使用QQ表情、符号表情
-					article.setDescription("柳峰，80后，"
-							+ emoji(0x1F6B9)
+					article.setDescription("柳峰，80后，" + emoji(0x1F6B9)
 							+ "，微信公众帐号开发经验4个月。为帮助初学者入门，特推出此系列连载教程，也希望借此机会认识更多同行！\n\n目前已推出教程共12篇，包括接口配置、消息封装、框架搭建、QQ表情发送、符号表情发送等。\n\n后期还计划推出一些实用功能的开发讲解，例如：天气预报、周边搜索、聊天功能等。");
 					// 将图片置为空
 					article.setPicUrl("");
@@ -409,44 +393,43 @@ public class CoreService extends BaseService implements ICoreService {
 			textMessage.setToUserName(fromUserName);
 			textMessage.setFromUserName(toUserName);
 			textMessage.setCreateTime(new Date().getTime());
-			textMessage.setMsgType(MessageManager.RESP_MESSAGE_TYPE_TEXT);
+			textMessage.setMsgType(MessageService.RESP_MESSAGE_TYPE_TEXT);
 			textMessage.setFuncFlag(0);
 
 			// 文本消息
-			if (msgType.equals(MessageManager.REQ_MESSAGE_TYPE_TEXT)) {
+			if (msgType.equals(MessageService.REQ_MESSAGE_TYPE_TEXT)) {
 				respContent = "您发送的是文本消息！";
 			}
 			// 图片消息
-			else if (msgType.equals(MessageManager.REQ_MESSAGE_TYPE_IMAGE)) {
+			else if (msgType.equals(MessageService.REQ_MESSAGE_TYPE_IMAGE)) {
 				respContent = "您发送的是图片消息！";
 			}
 			// 地理位置消息
-			else if (msgType.equals(MessageManager.REQ_MESSAGE_TYPE_LOCATION)) {
+			else if (msgType.equals(MessageService.REQ_MESSAGE_TYPE_LOCATION)) {
 				respContent = "您发送的是地理位置消息！";
 			}
 			// 链接消息
-			else if (msgType.equals(MessageManager.REQ_MESSAGE_TYPE_LINK)) {
+			else if (msgType.equals(MessageService.REQ_MESSAGE_TYPE_LINK)) {
 				respContent = "您发送的是链接消息！";
 			}
 			// 音频消息
-			else if (msgType.equals(MessageManager.REQ_MESSAGE_TYPE_VOICE)) {
+			else if (msgType.equals(MessageService.REQ_MESSAGE_TYPE_VOICE)) {
 				respContent = "您发送的是音频消息！";
 			}
 			// 事件推送
-			else if (msgType.equals(MessageManager.REQ_MESSAGE_TYPE_EVENT)) {
+			else if (msgType.equals(MessageService.REQ_MESSAGE_TYPE_EVENT)) {
 				// 事件类型
 				String eventType = requestMap.get("Event");
 				// 订阅
-				if (eventType.equals(MessageManager.EVENT_TYPE_SUBSCRIBE)) {
+				if (eventType.equals(MessageService.EVENT_TYPE_SUBSCRIBE)) {
 					respContent = "谢谢您的关注！";
 				}
 				// 取消订阅
-				else if (eventType
-						.equals(MessageManager.EVENT_TYPE_UNSUBSCRIBE)) {
+				else if (eventType.equals(MessageService.EVENT_TYPE_UNSUBSCRIBE)) {
 					// TODO 取消订阅后用户再收不到公众号发送的消息，因此不需要回复消息
 				}
 				// 自定义菜单点击事件
-				else if (eventType.equals(MessageManager.EVENT_TYPE_CLICK)) {
+				else if (eventType.equals(MessageService.EVENT_TYPE_CLICK)) {
 					// TODO 自定义菜单权没有开放，暂不处理该类消息
 				}
 			}

@@ -21,7 +21,7 @@ import com.manicure.keystone.entity.response.Article;
 import com.manicure.keystone.entity.response.MusicMessage;
 import com.manicure.keystone.entity.response.NewsMessage;
 import com.manicure.keystone.entity.response.TextMessage;
-import com.manicure.keystone.service.iface.IMessageManager;
+import com.manicure.keystone.service.iface.IMessageService;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.core.util.QuickWriter;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
@@ -33,7 +33,7 @@ import com.thoughtworks.xstream.io.xml.XppDriver;
  *
  */
 @Service
-public class MessageManager implements IMessageManager {
+public class MessageService implements IMessageService {
 
 	/**
 	 * 返回消息类型：文本
