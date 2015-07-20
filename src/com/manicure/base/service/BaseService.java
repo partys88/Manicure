@@ -20,17 +20,20 @@ public class BaseService {
 	// 与接口配置信息中的Token要一致
 	protected final String TOKEN = ConfigUtil.getProperty(propertiesFile, "token");
 	// 获取access_token的接口地址（GET） 限200（次/天）
-	protected final String ACCESS_TOKEN_URL = ConfigUtil.getProperty(propertiesFile, "url.access.token");
+	protected final String URL_GET_ACCESS_TOKEN = ConfigUtil.getProperty(propertiesFile, "url.access.token");
 	// 菜单创建（POST） 限100（次/天）
-	protected final String MENU_CREATE_URL = ConfigUtil.getProperty(propertiesFile, "url.menu.create");
+	protected final String URL_MENU_CREATE = ConfigUtil.getProperty(propertiesFile, "url.menu.create");
+
+	protected final String URL_SNS_OAUTH2_GET_TOKEN = ConfigUtil.getProperty(propertiesFile, "url.sns.oauth2.get.token");
+
+	protected final String URL_SNS_OAUTH2_REFRESH_TOKEN = ConfigUtil.getProperty(propertiesFile, "url.sns.oauth2.refresh.token");
 	// 获取用户信息
-	protected final String SNS_USER_GET_INFO_URL = ConfigUtil.getProperty(propertiesFile, "url.sns.user.get.info");
+	protected final String URL_USER_GET_SNS_INFO = ConfigUtil.getProperty(propertiesFile, "url.user.get.sns.info");
 
-	protected final String SNS_OAUTH2_GET_TOKEN_URL = ConfigUtil.getProperty(propertiesFile, "url.sns.oauth2.get.token");
+	protected final String URL_USER_GET_INFO = ConfigUtil.getProperty(propertiesFile, "url.user.get.info");
 
-	protected final String SNS_OAUTH2_REFRESH_TOKEN_URL = ConfigUtil.getProperty(propertiesFile, "url.sns.oauth2.refresh.token");
+	protected final String URL_USER_GET_LIST = ConfigUtil.getProperty(propertiesFile, "url.user.get.list");
 
-	protected final String USER_GET_INFO_URL = ConfigUtil.getProperty(propertiesFile, "url.user.get.info");
 	// logger
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 

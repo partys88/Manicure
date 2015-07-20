@@ -38,7 +38,7 @@ public class MenuService extends BaseService {
 		int result = 0;
 
 		// 拼装创建菜单的url
-		String url = MENU_CREATE_URL.replace("ACCESS_TOKEN", accessToken);
+		String url = URL_MENU_CREATE.replace("ACCESS_TOKEN", accessToken);
 		// 将菜单对象转换成json字符串
 		String jsonMenu = json.toString();
 		// 调用接口创建菜单

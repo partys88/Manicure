@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.manicure.base.controller.BaseController;
+import com.manicure.keystone.entity.ErrorMsg;
 import com.manicure.keystone.entity.SNSUserInfo;
 import com.manicure.keystone.entity.WeChatAccessToken;
 import com.manicure.keystone.entity.WeChatOauth2Token;
 import com.manicure.keystone.entity.WeChatUserInfo;
+import com.manicure.keystone.entity.WeChatUserList;
 import com.manicure.keystone.service.impl.CoreService;
 import com.manicure.keystone.service.impl.UserService;
 
@@ -43,12 +45,12 @@ public class UserController extends BaseController {
 	 * @param accessToken
 	 * @return
 	 */
-	@RequestMapping(value = "/user/sns/{openId}/{accessToken}")
+	@RequestMapping(value = "/user/sns/query/{openId}/{accessToken}")
 	@ResponseBody
 	public String getSNSUserInfo(HttpServletRequest request, HttpServletResponse response, @PathVariable String openId, @PathVariable String accessToken) {
-		// 调用接口创建菜单
+
 		SNSUserInfo snsUserInfo = userService.getSNSUserInfo(accessToken, openId);
-		// 判断菜单创建结果
+
 		if (null != snsUserInfo)
 			logger.info(snsUserInfo.toString());
 		else
@@ -68,7 +70,7 @@ public class UserController extends BaseController {
 	public String SNSUserOAuth(HttpServletRequest request, HttpServletResponse response) {
 		// 用户同意授权后，能获取到code
 		String code = request.getParameter("code");
-
+		ErrorMsg errMsg = new ErrorMsg();
 		// 用户同意授权
 		if (!"authdeny".equals(code) && null != code) {
 			// 获取网页授权access_token
@@ -92,15 +94,15 @@ public class UserController extends BaseController {
 				String openId = wechatOauth2Token.getOpenId();
 				// 调用接口获取access_token
 				WeChatAccessToken at = coreService.getAccessToken(APP_ID, APP_SECRET);
-				// 调用接口创建菜单
+
 				WeChatUserInfo wechatUserInfo = userService.getWeChatUserInfo(at.getToken(), openId);
 				logger.info(wechatUserInfo.toString());
 
 				return JSONObject.fromObject(wechatUserInfo).toString();
 			}
 		}
-		// return "/wechat/index";
-		return null;
+		logger.error("not authorised");
+		return "null";
 	}
 
 	/**
@@ -111,18 +113,37 @@ public class UserController extends BaseController {
 	 * @param openId
 	 * @return
 	 */
-	@RequestMapping(value = "/user/{openId}")
+	@RequestMapping(value = "/user/query/{openId}")
 	@ResponseBody
 	public String getWeChatUserInfo(HttpServletRequest request, HttpServletResponse response, @PathVariable String openId) {
 		// 调用接口获取access_token
 		WeChatAccessToken at = coreService.getAccessToken(APP_ID, APP_SECRET);
-		// 调用接口创建菜单
+
 		WeChatUserInfo wechatUserInfo = userService.getWeChatUserInfo(at.getToken(), openId);
-		// 判断菜单创建结果
+
 		if (null != wechatUserInfo)
 			logger.info(wechatUserInfo.toString());
 		else
-			logger.info("error");
+			logger.error("user is null");
 		return JSONObject.fromObject(wechatUserInfo).toString();
+	}
+
+	@RequestMapping(value = "/user/list/{nextOpenId}")
+	@ResponseBody
+	public String getWeChatUserList(HttpServletRequest request, HttpServletResponse response, @PathVariable String nextOpenId) {
+		// 调用接口获取access_token
+		WeChatAccessToken at = coreService.getAccessToken(APP_ID, APP_SECRET);
+		if ("0".equals(nextOpenId))
+			nextOpenId = null;
+
+		WeChatUserList wechatUserList = userService.getWeChatUserList(at.getToken(), nextOpenId);
+
+		if (null != wechatUserList)
+			logger.info(wechatUserList.toString());
+		else {
+			logger.error("list is null.");
+		}
+
+		return JSONObject.fromObject(wechatUserList).toString();
 	}
 }

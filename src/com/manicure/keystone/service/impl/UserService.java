@@ -8,6 +8,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import net.sf.json.JSONArray;
+import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ import com.manicure.base.service.BaseService;
 import com.manicure.keystone.entity.SNSUserInfo;
 import com.manicure.keystone.entity.WeChatOauth2Token;
 import com.manicure.keystone.entity.WeChatUserInfo;
+import com.manicure.keystone.entity.WeChatUserList;
 import com.manicure.keystone.service.iface.ICoreService;
 import com.manicure.keystone.service.iface.IUserService;
 
@@ -39,7 +41,7 @@ public class UserService extends BaseService implements IUserService {
 	public WeChatOauth2Token getOauth2AccessToken(String appId, String appSecret, String code) {
 		WeChatOauth2Token wat = null;
 		// 拼装创建菜单的url
-		String url = SNS_OAUTH2_GET_TOKEN_URL.replace("APPID", appId).replace("SECRET", appSecret).replace("CODE", code);
+		String url = URL_SNS_OAUTH2_GET_TOKEN.replace("APPID", appId).replace("SECRET", appSecret).replace("CODE", code);
 		// 获取网页授权凭证
 		JSONObject jsonObject = coreService.httpsRequest(url, "GET", null);
 		if (null != jsonObject) {
@@ -70,7 +72,7 @@ public class UserService extends BaseService implements IUserService {
 	public WeChatOauth2Token refreshOauth2AccessToken(String appId, String refreshToken) {
 		WeChatOauth2Token wat = null;
 		// 拼装创建菜单的url
-		String url = SNS_OAUTH2_REFRESH_TOKEN_URL.replace("APPID", appId).replace("REFRESH_TOKEN", refreshToken);
+		String url = URL_SNS_OAUTH2_REFRESH_TOKEN.replace("APPID", appId).replace("REFRESH_TOKEN", refreshToken);
 		// 刷新网页授权凭证
 		JSONObject jsonObject = coreService.httpsRequest(url, "GET", null);
 		if (null != jsonObject) {
@@ -105,7 +107,7 @@ public class UserService extends BaseService implements IUserService {
 		SNSUserInfo snsUserInfo = null;
 
 		// 拼装创建菜单的url
-		String url = SNS_USER_GET_INFO_URL.replace("ACCESS_TOKEN", accessToken).replace("OPENID", openId);
+		String url = URL_USER_GET_SNS_INFO.replace("ACCESS_TOKEN", accessToken).replace("OPENID", openId);
 		// 通过网页授权获取用户信息
 		JSONObject jsonObject = coreService.httpsRequest(url, "GET", null);
 
@@ -150,7 +152,7 @@ public class UserService extends BaseService implements IUserService {
 	public WeChatUserInfo getWeChatUserInfo(String accessToken, String openId) {
 		WeChatUserInfo wechatUserInfo = null;
 		// 拼装创建菜单的url
-		String url = USER_GET_INFO_URL.replace("ACCESS_TOKEN", accessToken).replace("OPENID", openId);
+		String url = URL_USER_GET_INFO.replace("ACCESS_TOKEN", accessToken).replace("OPENID", openId);
 		// 获取用户信息
 		JSONObject jsonObject = coreService.httpsRequest(url, "GET", null);
 
@@ -189,4 +191,40 @@ public class UserService extends BaseService implements IUserService {
 		}
 		return wechatUserInfo;
 	}
+
+	/**
+	 * 获取关注者列表
+	 * 
+	 * @param accessToken
+	 * @param nextOpenId
+	 * @return
+	 */
+	public WeChatUserList getWeChatUserList(String accessToken, String nextOpenId) {
+		WeChatUserList wechatUserList = null;
+		if (null == nextOpenId)
+			nextOpenId = "";
+		// 拼装创建菜单的url
+		String url = URL_USER_GET_LIST.replace("ACCESS_TOKEN", accessToken).replace("NEXT_OPENID", nextOpenId);
+		logger.info(url);
+		// 获取关注者列表
+		JSONObject jsonObject = coreService.httpsRequest(url, "GET", null);
+		// 如果请求成功
+		if (null != jsonObject && !"0".equals(jsonObject.get("count").toString())) {
+			try {
+				wechatUserList = new WeChatUserList();
+				wechatUserList.setTotal(jsonObject.getInt("total"));
+				wechatUserList.setCount(jsonObject.getInt("count"));
+				wechatUserList.setNextOpenId(jsonObject.getString("next_openid"));
+				JSONObject dataObject = (JSONObject) jsonObject.get("data");
+				wechatUserList.setOpenIdList(JSONArray.toList(dataObject.getJSONArray("openid"), List.class));
+			} catch (JSONException e) {
+				wechatUserList = null;
+				int errorCode = jsonObject.getInt("errcode");
+				String errorMsg = jsonObject.getString("errmsg");
+				logger.error("获取关注者列表失败 errcode:{} errmsg:{}", errorCode, errorMsg);
+			}
+		}
+		return wechatUserList;
+	}
+
 }
