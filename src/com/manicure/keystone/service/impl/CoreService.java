@@ -403,7 +403,7 @@ public class CoreService extends BaseService implements ICoreService {
 			if (msgType.equals(MessageService.REQ_MESSAGE_TYPE_TEXT)) {
 				respContent = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect";
 				respContent = respContent.replace("REDIRECT_URI",
-						Encoder.urlEncodeUTF8("http://barrieshieh.tunnel.mobi/Manicure/api/keystonekeystone/user/sns/oauth"));
+						Encoder.urlEncodeUTF8("http://barrieshieh.tunnel.mobi/Manicure/api/keystone/user/sns/oauth"));
 				respContent = respContent.replace("APPID", APP_ID);
 				respContent = respContent.replace("SCOPE", "snsapi_base");
 				respContent = respContent.replace("STATE", "STATE");
