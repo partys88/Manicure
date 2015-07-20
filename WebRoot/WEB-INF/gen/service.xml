@@ -32,6 +32,7 @@
 		<table tableName="service" domainObjectName="Service" />
 		<table tableName="order" domainObjectName="Order" />
 		<table tableName="service_comment" domainObjectName="serviceComment" />
+		<table tableName="service_type" domainObjectName="ServiceType" />
 
 	</context>
 </generatorConfiguration>
