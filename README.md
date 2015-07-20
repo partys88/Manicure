@@ -5,13 +5,13 @@ A WeChat server
 http://domain/Manicure/api/keystone/core/
 
 ###	Menu API
-#### create
+##### create
 http://domain/Manicure/api/keystone/menu/create 
 
 ###	User API
-#### SNS user query
+##### SNS user query
 http://domain/Manicure/api/keystone/user/sns/{openId}/{accessToken}
-#### SNS user OAuth
+##### SNS user OAuth
 http://domain/Manicure/api/keystone/user/sns/oauth 
-#### WeChat user query
+##### WeChat user query
 http://domain/Manicure/api/keystone/user/{openId} 
