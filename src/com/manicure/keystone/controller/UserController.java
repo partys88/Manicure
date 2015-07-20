@@ -3,10 +3,7 @@
  */
 package com.manicure.keystone.controller;
 
-import java.io.IOException;
-
 import javax.annotation.Resource;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -37,9 +34,18 @@ public class UserController extends BaseController {
 	@Resource
 	UserService userService;
 
+	/**
+	 * 获取SNS User信息
+	 * 
+	 * @param request
+	 * @param response
+	 * @param openId
+	 * @param accessToken
+	 * @return
+	 */
 	@RequestMapping(value = "/user/sns/{openId}/{accessToken}")
 	@ResponseBody
-	public String getSNSUserInfo(HttpServletRequest request, HttpServletResponse response, @PathVariable String openId, @PathVariable String accessToken) throws ServletException, IOException {
+	public String getSNSUserInfo(HttpServletRequest request, HttpServletResponse response, @PathVariable String openId, @PathVariable String accessToken) {
 		// 调用接口创建菜单
 		SNSUserInfo snsUserInfo = userService.getSNSUserInfo(accessToken, openId);
 		// 判断菜单创建结果
@@ -50,9 +56,16 @@ public class UserController extends BaseController {
 		return JSONObject.fromObject(snsUserInfo).toString();
 	}
 
+	/**
+	 * SNS User OAuth登录
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 */
 	@RequestMapping(value = "/user/sns/oauth")
 	@ResponseBody
-	public String SNSUserLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public String SNSUserOAuth(HttpServletRequest request, HttpServletResponse response) {
 		// 用户同意授权后，能获取到code
 		String code = request.getParameter("code");
 
@@ -72,7 +85,7 @@ public class UserController extends BaseController {
 
 				// 设置要传递的参数
 				request.setAttribute("snsUserInfo", snsUserInfo);
-				
+
 				return JSONObject.fromObject(snsUserInfo).toString();
 			} else {
 				// 用户标识
@@ -80,9 +93,9 @@ public class UserController extends BaseController {
 				// 调用接口获取access_token
 				WeChatAccessToken at = coreService.getAccessToken(APP_ID, APP_SECRET);
 				// 调用接口创建菜单
-				WeChatUserInfo wechatUserInfo = userService.getWeChatUserInfo(at.getToken(), openId);				
+				WeChatUserInfo wechatUserInfo = userService.getWeChatUserInfo(at.getToken(), openId);
 				logger.info(wechatUserInfo.toString());
-				
+
 				return JSONObject.fromObject(wechatUserInfo).toString();
 			}
 		}
@@ -90,9 +103,17 @@ public class UserController extends BaseController {
 		return null;
 	}
 
+	/**
+	 * 获取微信User信息
+	 * 
+	 * @param request
+	 * @param response
+	 * @param openId
+	 * @return
+	 */
 	@RequestMapping(value = "/user/{openId}")
 	@ResponseBody
-	public String getWeChatUserInfo(HttpServletRequest request, HttpServletResponse response, @PathVariable String openId) throws ServletException, IOException {
+	public String getWeChatUserInfo(HttpServletRequest request, HttpServletResponse response, @PathVariable String openId) {
 		// 调用接口获取access_token
 		WeChatAccessToken at = coreService.getAccessToken(APP_ID, APP_SECRET);
 		// 调用接口创建菜单
