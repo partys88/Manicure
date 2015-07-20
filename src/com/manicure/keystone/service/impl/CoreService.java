@@ -31,8 +31,9 @@ import net.sf.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import com.manicure.base.helper.CustomX509TrustManager;
+import com.manicure.base.helper.Encoder;
 import com.manicure.base.service.BaseService;
-import com.manicure.keystone.entity.AccessToken;
+import com.manicure.keystone.entity.WeChatAccessToken;
 import com.manicure.keystone.entity.response.Article;
 import com.manicure.keystone.entity.response.NewsMessage;
 import com.manicure.keystone.entity.response.TextMessage;
@@ -99,7 +100,7 @@ public class CoreService extends BaseService implements ICoreService {
 	 *            提交的数据
 	 * @return JSONObject(通过JSONObject.get(key)的方式获取json对象的属性值)
 	 */
-	public JSONObject httpRequest(String requestUrl, String requestMethod, String outputStr) {
+	public JSONObject httpsRequest(String requestUrl, String requestMethod, String outputStr) {
 		JSONObject jsonObject = null;
 		StringBuffer buffer = new StringBuffer();
 		try {
@@ -164,21 +165,22 @@ public class CoreService extends BaseService implements ICoreService {
 	 *            密钥
 	 * @return
 	 */
-	public AccessToken getAccessToken(String appid, String appsecret) {
-		AccessToken accessToken = null;
+	public WeChatAccessToken getAccessToken(String appid, String appsecret) {
+		WeChatAccessToken accessToken = null;
 
 		String requestUrl = ACCESS_TOKEN_URL.replace("APPID", appid).replace("APPSECRET", appsecret);
-		JSONObject jsonObject = httpRequest(requestUrl, "GET", null);
+		JSONObject jsonObject = httpsRequest(requestUrl, "GET", null);
 		// 如果请求成功
 		if (null != jsonObject) {
 			try {
-				accessToken = new AccessToken();
+				accessToken = new WeChatAccessToken();
 				accessToken.setToken(jsonObject.getString("access_token"));
 				accessToken.setExpiresIn(jsonObject.getInt("expires_in"));
 			} catch (JSONException e) {
 				accessToken = null;
 				// 获取token失败
-				logger.error("获取token失败 errcode:{} errmsg:{}", jsonObject.getInt("errcode"), jsonObject.getString("errmsg"));
+				logger.error("获取token失败 errcode:{} errmsg:{}", jsonObject.getInt("errcode"),
+						jsonObject.getString("errmsg"));
 			}
 		}
 		return accessToken;
@@ -249,7 +251,8 @@ public class CoreService extends BaseService implements ICoreService {
 					Article article = new Article();
 					article.setTitle("微信公众帐号开发教程Java版");
 					// 图文消息中可以使用QQ表情、符号表情
-					article.setDescription("柳峰，80后，" + emoji(0x1F6B9)
+					article.setDescription("柳峰，80后，"
+							+ emoji(0x1F6B9)
 							+ "，微信公众帐号开发经验4个月。为帮助初学者入门，特推出此系列连载教程，也希望借此机会认识更多同行！\n\n目前已推出教程共12篇，包括接口配置、消息封装、框架搭建、QQ表情发送、符号表情发送等。\n\n后期还计划推出一些实用功能的开发讲解，例如：天气预报、周边搜索、聊天功能等。");
 					// 将图片置为空
 					article.setPicUrl("");
@@ -376,7 +379,7 @@ public class CoreService extends BaseService implements ICoreService {
 		String respMessage = null;
 		try {
 			// 默认返回的文本消息内容
-			String respContent = "请求处理异常，请稍候尝试！";
+			String respContent = "error";
 
 			// xml请求解析
 			Map<String, String> requestMap = messageMgr.parseXml(request);
@@ -398,7 +401,12 @@ public class CoreService extends BaseService implements ICoreService {
 
 			// 文本消息
 			if (msgType.equals(MessageService.REQ_MESSAGE_TYPE_TEXT)) {
-				respContent = "您发送的是文本消息！";
+				respContent = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect";
+				respContent = respContent.replace("REDIRECT_URI",
+						Encoder.urlEncodeUTF8("http://barrieshieh.tunnel.mobi/Manicure/api/keystone/sns/user"));
+				respContent = respContent.replace("APPID", APP_ID);
+				respContent = respContent.replace("SCOPE", "snsapi_base");
+				respContent = respContent.replace("STATE", "STATE");
 			}
 			// 图片消息
 			else if (msgType.equals(MessageService.REQ_MESSAGE_TYPE_IMAGE)) {

@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONObject;
 
-import com.manicure.keystone.entity.AccessToken;
+import com.manicure.keystone.entity.WeChatAccessToken;
 
 /**
  * @author Barrie
@@ -24,8 +24,8 @@ public interface ICoreService {
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException;
 
-	public JSONObject httpRequest(String requestUrl, String requestMethod,
+	public JSONObject httpsRequest(String requestUrl, String requestMethod,
 			String outputStr);
 
-	public AccessToken getAccessToken(String appid, String appsecret);
+	public WeChatAccessToken getAccessToken(String appid, String appsecret);
 }

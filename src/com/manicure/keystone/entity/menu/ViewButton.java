@@ -4,14 +4,12 @@
 package com.manicure.keystone.entity.menu;
 
 /**
- * 普通按钮（子按钮）
- * 
  * @author Barrie
  *
  */
-public class CommonButton extends Button {
+public class ViewButton extends Button {
 	private String type;
-	private String key;
+	private String url;
 
 	/**
 	 * @return the type
@@ -29,17 +27,17 @@ public class CommonButton extends Button {
 	}
 
 	/**
-	 * @return the key
+	 * @return the url
 	 */
-	public String getKey() {
-		return key;
+	public String getUrl() {
+		return url;
 	}
 
 	/**
-	 * @param key
-	 *            the key to set
+	 * @param url
+	 *            the url to set
 	 */
-	public void setKey(String key) {
-		this.key = key;
+	public void setUrl(String url) {
+		this.url = url;
 	}
 }

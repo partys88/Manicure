@@ -3,13 +3,15 @@
  */
 package com.manicure.keystone.entity;
 
+import com.manicure.base.entity.BaseEntity;
+
 /**
  * 微信通用接口凭证
  * 
  * @author Barrie
  *
  */
-public class AccessToken {
+public class WeChatAccessToken extends BaseEntity{
 	// 获取到的凭证
 	private String token;
 	// 凭证有效时间，单位：秒

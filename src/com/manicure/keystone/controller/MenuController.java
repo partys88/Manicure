@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.manicure.base.controller.BaseController;
 import com.manicure.base.helper.ConfigUtil;
-import com.manicure.keystone.entity.AccessToken;
+import com.manicure.keystone.entity.WeChatAccessToken;
 import com.manicure.keystone.service.impl.CoreService;
 import com.manicure.keystone.service.impl.MenuService;
 
@@ -27,19 +27,19 @@ import com.manicure.keystone.service.impl.MenuService;
 @RequestMapping(value = "/api/keystone")
 public class MenuController extends BaseController {
 	@Resource
-	MenuService menuMgr;
+	MenuService menuService;
 	@Resource
 	CoreService coreService;
 
-	@RequestMapping(value = "/menu/init")
+	@RequestMapping(value = "/menu/create")
 	public void create(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		// 调用接口获取access_token
-		AccessToken at = coreService.getAccessToken(APP_ID, APP_SECRET);
+		WeChatAccessToken at = coreService.getAccessToken(APP_ID, APP_SECRET);
 
 		if (null != at) {
 			// 调用接口创建菜单
-			int result = menuMgr.create(ConfigUtil.getJson("menu.json"), at.getToken());
+			int result = menuService.create(at.getToken(), ConfigUtil.getJson("menu.json"));
 
 			// 判断菜单创建结果
 			if (0 == result)
