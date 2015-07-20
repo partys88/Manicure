@@ -37,7 +37,7 @@ public class UserController extends BaseController {
 	@Resource
 	UserService userService;
 
-	@RequestMapping(value = "/sns/user/{openId}/{accessToken}")
+	@RequestMapping(value = "/user/sns/{openId}/{accessToken}")
 	@ResponseBody
 	public String getSNSUserInfo(HttpServletRequest request, HttpServletResponse response, @PathVariable String openId, @PathVariable String accessToken) throws ServletException, IOException {
 		// 调用接口创建菜单
@@ -50,7 +50,7 @@ public class UserController extends BaseController {
 		return JSONObject.fromObject(snsUserInfo).toString();
 	}
 
-	@RequestMapping(value = "/sns/user")
+	@RequestMapping(value = "/user/sns/oauth")
 	@ResponseBody
 	public String SNSUserLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 用户同意授权后，能获取到code

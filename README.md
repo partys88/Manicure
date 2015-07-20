@@ -10,6 +10,8 @@ http://domain/Manicure/api/keystone/menu/create
 
 ##	User API	##
 SNS user query
-http://domain/Manicure/api/keystone/sns/user/{openId}/{accessToken}
-SNS user query
-http://domain/Manicure/api/keystone/sns/user/{openId}/{accessToken}
+http://domain/Manicure/api/keystone/user/sns/{openId}/{accessToken}
+SNS user OAuth
+http://domain/Manicure/api/keystone/user/sns/oauth
+WeChat user query
+http://domain/Manicure/api/keystone/user/{openId}
