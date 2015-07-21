@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.manicure.base.controller.BaseController;
 import com.manicure.keystone.entity.ErrorMsg;
-import com.manicure.keystone.entity.WeChatAccessToken;
-import com.manicure.keystone.entity.WeChatOauth2Token;
 import com.manicure.keystone.service.impl.CoreService;
 import com.manicure.keystone.service.impl.UserService;
 
@@ -54,11 +52,12 @@ public class UserController extends BaseController {
 		// else
 		// logger.info("error");
 		// return JSONObject.fromObject(snsUserInfo).toString();
-		JSONObject jsonObject = userService.getSNSUserInfo(accessToken, openId);
-		if (jsonObject.containsKey("errcode")) {
-			logger.error(jsonObject.toString());
+		JSONObject resp = userService.getSNSUserInfo(accessToken, openId);
+		if (resp.containsKey("errcode")) {
+			logger.error(resp.toString());
+			return resp.toString();
 		}
-		return jsonObject.toString();
+		return resp.toString();
 	}
 
 	/**
@@ -122,8 +121,8 @@ public class UserController extends BaseController {
 			}
 		}
 		ErrorMsg errMsg = new ErrorMsg();
-		errMsg.setErrCode("80001");
-		errMsg.setErrMsg("not authorised");
+		errMsg.setErrcode("-1");
+		errMsg.setErrmsg("server is busy");
 		logger.error(JSONObject.fromObject(errMsg).toString());
 		return JSONObject.fromObject(errMsg).toString();
 	}

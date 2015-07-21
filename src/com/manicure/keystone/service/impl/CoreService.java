@@ -25,7 +25,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JSONException;
 import net.sf.json.JSONObject;
 
 import org.springframework.stereotype.Service;
@@ -33,7 +32,7 @@ import org.springframework.stereotype.Service;
 import com.manicure.base.helper.CustomX509TrustManager;
 import com.manicure.base.helper.Encoder;
 import com.manicure.base.service.BaseService;
-import com.manicure.keystone.entity.WeChatAccessToken;
+import com.manicure.keystone.entity.ErrorMsg;
 import com.manicure.keystone.entity.response.Article;
 import com.manicure.keystone.entity.response.NewsMessage;
 import com.manicure.keystone.entity.response.TextMessage;
@@ -183,6 +182,12 @@ public class CoreService extends BaseService implements ICoreService {
 		// }
 		// }
 		// return accessToken;
+		if(null==jsonObject){
+			ErrorMsg errMsg = new ErrorMsg();
+			errMsg.setErrcode("-1");
+			errMsg.setErrmsg("server is busy");
+			return JSONObject.fromObject(errMsg);
+		}
 		return jsonObject;
 	}
 

@@ -10,6 +10,7 @@ import net.sf.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import com.manicure.base.service.BaseService;
+import com.manicure.keystone.entity.ErrorMsg;
 import com.manicure.keystone.entity.material.GetMaterialListReq;
 import com.manicure.keystone.entity.material.GetMaterialReq;
 import com.manicure.keystone.service.iface.ICoreService;
@@ -37,7 +38,14 @@ public class MaterialService extends BaseService implements IMaterialService {
 		request.setOffset(0);
 		request.setCount(20);
 		JSONObject jsonObject = coreService.httpsRequest(url, "POST", JSONObject.fromObject(request).toString());
-
+		
+		if(null==jsonObject){
+			ErrorMsg errMsg = new ErrorMsg();
+			errMsg.setErrcode("-1");
+			errMsg.setErrmsg("server is busy");
+			
+			return JSONObject.fromObject(errMsg);
+		}
 		return jsonObject;
 	}
 
@@ -57,6 +65,13 @@ public class MaterialService extends BaseService implements IMaterialService {
 
 		JSONObject jsonObject = coreService.httpsRequest(url, "POST", JSONObject.fromObject(request).toString());
 
+		if(null==jsonObject){
+			ErrorMsg errMsg = new ErrorMsg();
+			errMsg.setErrcode("-1");
+			errMsg.setErrmsg("server is busy");
+			
+			return JSONObject.fromObject(errMsg);
+		}
 		return jsonObject;
 	}
 }

@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.manicure.base.controller.BaseController;
-import com.manicure.keystone.entity.WeChatAccessToken;
 import com.manicure.keystone.service.iface.ICoreService;
 import com.manicure.keystone.service.impl.MaterialService;
 
@@ -74,6 +73,6 @@ public class MaterialController extends BaseController {
 			return resp.toString();
 		}
 		return resp.toString();
-		
+
 	}
 }

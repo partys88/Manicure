@@ -10,7 +10,7 @@ import net.sf.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import com.manicure.base.service.BaseService;
-import com.manicure.keystone.entity.WeChatOauth2Token;
+import com.manicure.keystone.entity.ErrorMsg;
 import com.manicure.keystone.service.iface.ICoreService;
 import com.manicure.keystone.service.iface.IUserService;
 
@@ -53,6 +53,12 @@ public class UserService extends BaseService implements IUserService {
 		// }
 		// }
 		// return wat;
+		if (null == jsonObject) {
+			ErrorMsg errMsg = new ErrorMsg();
+			errMsg.setErrcode("-1");
+			errMsg.setErrmsg("server is busy");
+			return JSONObject.fromObject(errMsg);
+		}
 		return jsonObject;
 
 	}
@@ -86,6 +92,12 @@ public class UserService extends BaseService implements IUserService {
 		// }
 		// }
 		// return wat;
+		if (null == jsonObject) {
+			ErrorMsg errMsg = new ErrorMsg();
+			errMsg.setErrcode("-1");
+			errMsg.setErrmsg("server is busy");
+			return JSONObject.fromObject(errMsg);
+		}
 		return jsonObject;
 	}
 
@@ -135,6 +147,13 @@ public class UserService extends BaseService implements IUserService {
 		// }
 		// }
 		// return snsUserInfo;
+		if (null == jsonObject) {
+			ErrorMsg errMsg = new ErrorMsg();
+			errMsg.setErrcode("-1");
+			errMsg.setErrmsg("server is busy");
+
+			return JSONObject.fromObject(errMsg);
+		}
 		return jsonObject;
 	}
 
@@ -188,6 +207,13 @@ public class UserService extends BaseService implements IUserService {
 		// }
 		// }
 		// return wechatUserInfo;
+		if (null == jsonObject) {
+			ErrorMsg errMsg = new ErrorMsg();
+			errMsg.setErrcode("-1");
+			errMsg.setErrmsg("server is busy");
+
+			return JSONObject.fromObject(errMsg);
+		}
 		return jsonObject;
 	}
 
@@ -225,6 +251,13 @@ public class UserService extends BaseService implements IUserService {
 		// }
 		// }
 		// return wechatUserList;
+		if (null == jsonObject) {
+			ErrorMsg errMsg = new ErrorMsg();
+			errMsg.setErrcode("-1");
+			errMsg.setErrmsg("server is busy");
+
+			return JSONObject.fromObject(errMsg);
+		}
 		return jsonObject;
 	}
 

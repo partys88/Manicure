@@ -5,8 +5,6 @@ package com.manicure.keystone.service.iface;
 
 import net.sf.json.JSONObject;
 
-import com.manicure.keystone.entity.WeChatOauth2Token;
-
 /**
  * @author Barrie
  *

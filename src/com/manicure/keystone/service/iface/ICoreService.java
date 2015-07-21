@@ -11,8 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONObject;
 
-import com.manicure.keystone.entity.WeChatAccessToken;
-
 /**
  * @author Barrie
  *

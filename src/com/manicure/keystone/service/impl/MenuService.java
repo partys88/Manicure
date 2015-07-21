@@ -12,6 +12,7 @@ import net.sf.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import com.manicure.base.service.BaseService;
+import com.manicure.keystone.entity.ErrorMsg;
 import com.manicure.keystone.service.iface.ICoreService;
 
 /**
@@ -53,6 +54,13 @@ public class MenuService extends BaseService {
 		// }
 		//
 		// return result;
+		if(null==jsonObject){
+			ErrorMsg errMsg = new ErrorMsg();
+			errMsg.setErrcode("-1");
+			errMsg.setErrmsg("server is busy");
+			
+			return JSONObject.fromObject(errMsg);
+		}
 		return jsonObject;
 	}
 }

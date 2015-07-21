@@ -18,8 +18,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.manicure.base.controller.BaseController;
 import com.manicure.base.helper.ConfigUtil;
-import com.manicure.keystone.entity.ErrorMsg;
-import com.manicure.keystone.entity.WeChatAccessToken;
 import com.manicure.keystone.service.impl.CoreService;
 import com.manicure.keystone.service.impl.MenuService;
 

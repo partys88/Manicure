@@ -9,38 +9,34 @@ import com.manicure.base.entity.BaseEntity;
  * @author Barrie
  *
  */
-public class ErrorMsg extends BaseEntity{
-	private String errCode;
-	private String errMsg;
-
+public class ErrorMsg extends BaseEntity {
+	private String errcode;
+	private String errmsg;
 	/**
-	 * @return the errCode
+	 * @return the errcode
 	 */
-	public String getErrCode() {
-		return errCode;
+	public String getErrcode() {
+		return errcode;
+	}
+	/**
+	 * @param errcode the errcode to set
+	 */
+	public void setErrcode(String errcode) {
+		this.errcode = errcode;
+	}
+	/**
+	 * @return the errmsg
+	 */
+	public String getErrmsg() {
+		return errmsg;
+	}
+	/**
+	 * @param errmsg the errmsg to set
+	 */
+	public void setErrmsg(String errmsg) {
+		this.errmsg = errmsg;
 	}
 
-	/**
-	 * @param errCode
-	 *            the errCode to set
-	 */
-	public void setErrCode(String errCode) {
-		this.errCode = errCode;
-	}
-
-	/**
-	 * @return the errMsg
-	 */
-	public String getErrMsg() {
-		return errMsg;
-	}
-
-	/**
-	 * @param errMsg
-	 *            the errMsg to set
-	 */
-	public void setErrMsg(String errMsg) {
-		this.errMsg = errMsg;
-	}
 	
+
 }
