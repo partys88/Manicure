@@ -23,3 +23,4 @@ http://domain/Manicure/api/keystone/user/list/{nextOpenId}
 http://domain/Manicure/api/keystone/material/query/{mediaId}
 ##### Get material list
 http://domain/Manicure/api/keystone/material/list
+
