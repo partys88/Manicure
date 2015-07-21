@@ -122,8 +122,7 @@ public class UserController extends BaseController {
 		}
 		ErrorMsg errMsg = new ErrorMsg();
 		errMsg.setErrcode("-1");
-		errMsg.setErrmsg("server is busy");
-		logger.error(JSONObject.fromObject(errMsg).toString());
+		errMsg.setErrmsg("not authorised");
 		return JSONObject.fromObject(errMsg).toString();
 	}
 
