@@ -49,13 +49,16 @@ public class UserController extends BaseController {
 	@ResponseBody
 	public String getSNSUserInfo(HttpServletRequest request, HttpServletResponse response, @PathVariable String openId, @PathVariable String accessToken) {
 
-		SNSUserInfo snsUserInfo = userService.getSNSUserInfo(accessToken, openId);
-
-		if (null != snsUserInfo)
-			logger.info(snsUserInfo.toString());
-		else
-			logger.info("error");
-		return JSONObject.fromObject(snsUserInfo).toString();
+		// SNSUserInfo snsUserInfo = userService.getSNSUserInfo(accessToken,
+		// openId);
+		//
+		// if (null != snsUserInfo)
+		// logger.info(snsUserInfo.toString());
+		// else
+		// logger.info("error");
+		// return JSONObject.fromObject(snsUserInfo).toString();
+		JSONObject jsonObject = userService.getSNSUserInfo(accessToken, openId);
+		return jsonObject.toString();
 	}
 
 	/**
@@ -81,24 +84,30 @@ public class UserController extends BaseController {
 			if ("snsapi_userinfo".equals(wechatOauth2Token.getScope())) {
 				// 用户标识
 				String openId = wechatOauth2Token.getOpenId();
-				// 获取用户信息
-				SNSUserInfo snsUserInfo = userService.getSNSUserInfo(accessToken, openId);
-				logger.info(snsUserInfo.toString());
-
-				// 设置要传递的参数
-				request.setAttribute("snsUserInfo", snsUserInfo);
-
-				return JSONObject.fromObject(snsUserInfo).toString();
+				// // 获取用户信息
+				// SNSUserInfo snsUserInfo =
+				// userService.getSNSUserInfo(accessToken, openId);
+				// logger.info(snsUserInfo.toString());
+				//
+				// // 设置要传递的参数
+				// request.setAttribute("snsUserInfo", snsUserInfo);
+				//
+				// return JSONObject.fromObject(snsUserInfo).toString();
+				JSONObject jsonObject = userService.getSNSUserInfo(accessToken, openId);
+				return jsonObject.toString();
 			} else {
 				// 用户标识
 				String openId = wechatOauth2Token.getOpenId();
 				// 调用接口获取access_token
 				WeChatAccessToken at = coreService.getAccessToken(APP_ID, APP_SECRET);
 
-				WeChatUserInfo wechatUserInfo = userService.getWeChatUserInfo(at.getToken(), openId);
-				logger.info(wechatUserInfo.toString());
-
-				return JSONObject.fromObject(wechatUserInfo).toString();
+				// WeChatUserInfo wechatUserInfo =
+				// userService.getWeChatUserInfo(at.getToken(), openId);
+				// logger.info(wechatUserInfo.toString());
+				//
+				// return JSONObject.fromObject(wechatUserInfo).toString();
+				JSONObject jsonObject = userService.getWeChatUserInfo(at.getToken(), openId);
+				return jsonObject.toString();
 			}
 		}
 		logger.error("not authorised");
@@ -119,13 +128,16 @@ public class UserController extends BaseController {
 		// 调用接口获取access_token
 		WeChatAccessToken at = coreService.getAccessToken(APP_ID, APP_SECRET);
 
-		WeChatUserInfo wechatUserInfo = userService.getWeChatUserInfo(at.getToken(), openId);
-
-		if (null != wechatUserInfo)
-			logger.info(wechatUserInfo.toString());
-		else
-			logger.error("user is null");
-		return JSONObject.fromObject(wechatUserInfo).toString();
+		// WeChatUserInfo wechatUserInfo =
+		// userService.getWeChatUserInfo(at.getToken(), openId);
+		//
+		// if (null != wechatUserInfo)
+		// logger.info(wechatUserInfo.toString());
+		// else
+		// logger.error("user is null");
+		// return JSONObject.fromObject(wechatUserInfo).toString();
+		JSONObject jsonObject = userService.getWeChatUserInfo(at.getToken(), openId);
+		return jsonObject.toString();
 	}
 
 	@RequestMapping(value = "/user/list/{nextOpenId}")
@@ -136,14 +148,17 @@ public class UserController extends BaseController {
 		if ("0".equals(nextOpenId))
 			nextOpenId = null;
 
-		WeChatUserList wechatUserList = userService.getWeChatUserList(at.getToken(), nextOpenId);
-
-		if (null != wechatUserList)
-			logger.info(wechatUserList.toString());
-		else {
-			logger.error("list is null.");
-		}
-
-		return JSONObject.fromObject(wechatUserList).toString();
+		// WeChatUserList wechatUserList =
+		// userService.getWeChatUserList(at.getToken(), nextOpenId);
+		//
+		// if (null != wechatUserList)
+		// logger.info(wechatUserList.toString());
+		// else {
+		// logger.error("list is null.");
+		// }
+		//
+		// return JSONObject.fromObject(wechatUserList).toString();
+		JSONObject jsonObject = userService.getWeChatUserList(at.getToken(), nextOpenId);
+		return jsonObject.toString();
 	}
 }
