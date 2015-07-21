@@ -165,25 +165,25 @@ public class CoreService extends BaseService implements ICoreService {
 	 *            密钥
 	 * @return
 	 */
-	public WeChatAccessToken getAccessToken(String appid, String appsecret) {
-		WeChatAccessToken accessToken = null;
+	public JSONObject getAccessToken(String appid, String appsecret) {
+		// WeChatAccessToken accessToken = null;
 
 		String requestUrl = URL_GET_ACCESS_TOKEN.replace("APPID", appid).replace("APPSECRET", appsecret);
 		JSONObject jsonObject = httpsRequest(requestUrl, "GET", null);
-		// 如果请求成功
-		if (null != jsonObject) {
-			try {
-				accessToken = new WeChatAccessToken();
-				accessToken.setToken(jsonObject.getString("access_token"));
-				accessToken.setExpiresIn(jsonObject.getInt("expires_in"));
-			} catch (JSONException e) {
-				accessToken = null;
-				// 获取token失败
-				logger.error("获取token失败 errcode:{} errmsg:{}", jsonObject.getInt("errcode"),
-						jsonObject.getString("errmsg"));
-			}
-		}
-		return accessToken;
+		// // 如果请求成功
+		// if (null != jsonObject) {
+		// try {
+		// accessToken = new WeChatAccessToken();
+		// accessToken.setToken(jsonObject.getString("access_token"));
+		// accessToken.setExpiresIn(jsonObject.getInt("expires_in"));
+		// } catch (JSONException e) {
+		// accessToken = null;
+		// // 获取token失败
+		// logger.error(jsonObject.toString());
+		// }
+		// }
+		// return accessToken;
+		return jsonObject;
 	}
 
 	/**
@@ -251,8 +251,7 @@ public class CoreService extends BaseService implements ICoreService {
 					Article article = new Article();
 					article.setTitle("微信公众帐号开发教程Java版");
 					// 图文消息中可以使用QQ表情、符号表情
-					article.setDescription("柳峰，80后，"
-							+ emoji(0x1F6B9)
+					article.setDescription("柳峰，80后，" + emoji(0x1F6B9)
 							+ "，微信公众帐号开发经验4个月。为帮助初学者入门，特推出此系列连载教程，也希望借此机会认识更多同行！\n\n目前已推出教程共12篇，包括接口配置、消息封装、框架搭建、QQ表情发送、符号表情发送等。\n\n后期还计划推出一些实用功能的开发讲解，例如：天气预报、周边搜索、聊天功能等。");
 					// 将图片置为空
 					article.setPicUrl("");
@@ -402,8 +401,7 @@ public class CoreService extends BaseService implements ICoreService {
 			// 文本消息
 			if (msgType.equals(MessageService.REQ_MESSAGE_TYPE_TEXT)) {
 				respContent = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect";
-				respContent = respContent.replace("REDIRECT_URI",
-						Encoder.urlEncodeUTF8("http://barrieshieh.tunnel.mobi/Manicure/api/keystone/user/sns/oauth"));
+				respContent = respContent.replace("REDIRECT_URI", Encoder.urlEncodeUTF8("http://barrieshieh.tunnel.mobi/Manicure/api/keystone/user/sns/oauth"));
 				respContent = respContent.replace("APPID", APP_ID);
 				respContent = respContent.replace("SCOPE", "snsapi_base");
 				respContent = respContent.replace("STATE", "STATE");

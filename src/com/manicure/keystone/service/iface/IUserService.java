@@ -12,7 +12,7 @@ import com.manicure.keystone.entity.WeChatOauth2Token;
  *
  */
 public interface IUserService {
-	public WeChatOauth2Token getOauth2AccessToken(String appId, String appSecret, String code);
+	public JSONObject getOauth2AccessToken(String appId, String appSecret, String code);
 
 	public JSONObject refreshOauth2AccessToken(String appId, String refreshToken);
 

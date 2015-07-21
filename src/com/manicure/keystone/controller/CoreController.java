@@ -28,12 +28,11 @@ public class CoreController extends BaseController {
 	CoreService coreService;
 
 	@RequestMapping(value = "/core")
-	public void connect(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public void connect(HttpServletRequest request, HttpServletResponse response) {
 		String method = request.getMethod();
 		logger.info(method);
 		if ("GET".equals(method)) {
 			try {
-				logger.info(request.getParameter("signature"));
 				coreService.doGet(request, response);
 			} catch (Exception e) {
 				logger.error(e.getMessage());
@@ -41,7 +40,6 @@ public class CoreController extends BaseController {
 
 		} else if ("POST".equals(method)) {
 			try {
-				logger.info(request.getInputStream().toString());
 				coreService.doPost(request, response);
 			} catch (Exception e) {
 				logger.error(e.getMessage());

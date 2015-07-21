@@ -34,8 +34,8 @@ public class MenuService extends BaseService {
 	 * @return 0表示成功，其他值表示失败
 	 * @throws IOException
 	 */
-	public int create(String accessToken, JSONObject json) {
-		int result = 0;
+	public JSONObject create(String accessToken, JSONObject json) {
+		// int result = 0;
 
 		// 拼装创建菜单的url
 		String url = URL_MENU_CREATE.replace("ACCESS_TOKEN", accessToken);
@@ -44,13 +44,15 @@ public class MenuService extends BaseService {
 		// 调用接口创建菜单
 		JSONObject jsonObject = coreService.httpsRequest(url, "POST", jsonMenu);
 
-		if (null != jsonObject) {
-			if (0 != jsonObject.getInt("errcode")) {
-				result = jsonObject.getInt("errcode");
-				logger.error("创建菜单失败 errcode:{} errmsg:{}", jsonObject.getInt("errcode"), jsonObject.getString("errmsg"));
-			}
-		}
-
-		return result;
+		// if (null != jsonObject) {
+		// if (0 != jsonObject.getInt("errcode")) {
+		// result = jsonObject.getInt("errcode");
+		// logger.error("创建菜单失败 errcode:{} errmsg:{}",
+		// jsonObject.getInt("errcode"), jsonObject.getString("errmsg"));
+		// }
+		// }
+		//
+		// return result;
+		return jsonObject;
 	}
 }

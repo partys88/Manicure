@@ -40,10 +40,16 @@ public class MaterialController extends BaseController {
 	@RequestMapping(value = "/material/list")
 	@ResponseBody
 	public String getMaterialList(HttpServletRequest request, HttpServletResponse response) {
-		WeChatAccessToken at = coreService.getAccessToken(APP_ID, APP_SECRET);
-		JSONObject jsonObject = materialService.getMaterialList(at.getToken());
-		// logger.info(a);
-		return jsonObject.toString();
+		// 调用接口获取access_token
+		JSONObject at = coreService.getAccessToken(APP_ID, APP_SECRET);
+		if (at.containsKey("errcode")) {
+			logger.error(at.toString());
+		}
+		JSONObject resp = materialService.getMaterialList(at.getString("access_token"));
+		if (resp.containsKey("errcode")) {
+			logger.error(resp.toString());
+		}
+		return resp.toString();
 	}
 
 	/**
@@ -56,9 +62,18 @@ public class MaterialController extends BaseController {
 	@RequestMapping(value = "/material/query/{mediaId}")
 	@ResponseBody
 	public String getMaterial(HttpServletRequest request, HttpServletResponse response, @PathVariable String mediaId) {
-		WeChatAccessToken at = coreService.getAccessToken(APP_ID, APP_SECRET);
-		JSONObject jsonObject = materialService.getMaterial(at.getToken(), mediaId);
-		// logger.info(a);
-		return jsonObject.toString();
+		// 调用接口获取access_token
+		JSONObject at = coreService.getAccessToken(APP_ID, APP_SECRET);
+		if (at.containsKey("errcode")) {
+			logger.error(at.toString());
+			return at.toString();
+		}
+		JSONObject resp = materialService.getMaterial(at.getString("access_token"), mediaId);
+		if (resp.containsKey("errcode")) {
+			logger.error(resp.toString());
+			return resp.toString();
+		}
+		return resp.toString();
+		
 	}
 }

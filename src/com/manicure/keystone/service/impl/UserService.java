@@ -31,28 +31,29 @@ public class UserService extends BaseService implements IUserService {
 	 * @param code
 	 * @return
 	 */
-	public WeChatOauth2Token getOauth2AccessToken(String appId, String appSecret, String code) {
-		WeChatOauth2Token wat = null;
+	public JSONObject getOauth2AccessToken(String appId, String appSecret, String code) {
+		// WeChatOauth2Token wat = null;
 		// 拼装创建菜单的url
 		String url = URL_SNS_OAUTH2_GET_TOKEN.replace("APPID", appId).replace("SECRET", appSecret).replace("CODE", code);
 		// 获取网页授权凭证
 		JSONObject jsonObject = coreService.httpsRequest(url, "GET", null);
-		if (null != jsonObject) {
-			try {
-				wat = new WeChatOauth2Token();
-				wat.setAccessToken(jsonObject.getString("access_token"));
-				wat.setExpiresIn(jsonObject.getInt("expires_in"));
-				wat.setRefreshToken(jsonObject.getString("refresh_token"));
-				wat.setOpenId(jsonObject.getString("openid"));
-				wat.setScope(jsonObject.getString("scope"));
-			} catch (Exception e) {
-				wat = null;
-				int errorCode = jsonObject.getInt("errcode");
-				String errorMsg = jsonObject.getString("errmsg");
-				logger.error("获取网页授权凭证失败 errcode:{} errmsg:{}", errorCode, errorMsg);
-			}
-		}
-		return wat;
+		// if (null != jsonObject) {
+		// try {
+		// wat = new WeChatOauth2Token();
+		// wat.setAccessToken(jsonObject.getString("access_token"));
+		// wat.setExpiresIn(jsonObject.getInt("expires_in"));
+		// wat.setRefreshToken(jsonObject.getString("refresh_token"));
+		// wat.setOpenId(jsonObject.getString("openid"));
+		// wat.setScope(jsonObject.getString("scope"));
+		// } catch (Exception e) {
+		// wat = null;
+		// int errorCode = jsonObject.getInt("errcode");
+		// String errorMsg = jsonObject.getString("errmsg");
+		// logger.error("获取网页授权凭证失败 errcode:{} errmsg:{}", errorCode, errorMsg);
+		// }
+		// }
+		// return wat;
+		return jsonObject;
 
 	}
 

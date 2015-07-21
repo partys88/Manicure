@@ -27,5 +27,5 @@ public interface ICoreService {
 	public JSONObject httpsRequest(String requestUrl, String requestMethod,
 			String outputStr);
 
-	public WeChatAccessToken getAccessToken(String appid, String appsecret);
+	public JSONObject getAccessToken(String appid, String appsecret);
 }

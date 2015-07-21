@@ -10,5 +10,5 @@ import net.sf.json.JSONObject;
  *
  */
 public interface IMenuService{
-	public int create(JSONObject json, String accessToken);
+	public JSONObject create(JSONObject json, String accessToken);
 }

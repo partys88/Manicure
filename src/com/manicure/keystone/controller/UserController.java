@@ -16,11 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.manicure.base.controller.BaseController;
 import com.manicure.keystone.entity.ErrorMsg;
-import com.manicure.keystone.entity.SNSUserInfo;
 import com.manicure.keystone.entity.WeChatAccessToken;
 import com.manicure.keystone.entity.WeChatOauth2Token;
-import com.manicure.keystone.entity.WeChatUserInfo;
-import com.manicure.keystone.entity.WeChatUserList;
 import com.manicure.keystone.service.impl.CoreService;
 import com.manicure.keystone.service.impl.UserService;
 
@@ -58,6 +55,9 @@ public class UserController extends BaseController {
 		// logger.info("error");
 		// return JSONObject.fromObject(snsUserInfo).toString();
 		JSONObject jsonObject = userService.getSNSUserInfo(accessToken, openId);
+		if (jsonObject.containsKey("errcode")) {
+			logger.error(jsonObject.toString());
+		}
 		return jsonObject.toString();
 	}
 
@@ -73,17 +73,18 @@ public class UserController extends BaseController {
 	public String SNSUserOAuth(HttpServletRequest request, HttpServletResponse response) {
 		// 用户同意授权后，能获取到code
 		String code = request.getParameter("code");
-		ErrorMsg errMsg = new ErrorMsg();
 		// 用户同意授权
 		if (!"authdeny".equals(code) && null != code) {
 			// 获取网页授权access_token
-			WeChatOauth2Token wechatOauth2Token = userService.getOauth2AccessToken(APP_ID, APP_SECRET, code);
-			// 网页授权接口访问凭证
-			String accessToken = wechatOauth2Token.getAccessToken();
-			logger.info(wechatOauth2Token.toString());
-			if ("snsapi_userinfo".equals(wechatOauth2Token.getScope())) {
-				// 用户标识
-				String openId = wechatOauth2Token.getOpenId();
+			JSONObject sat = userService.getOauth2AccessToken(APP_ID, APP_SECRET, code);
+			if (sat.containsKey("errcode")) {
+				logger.error(sat.toString());
+				return sat.toString();
+			}
+			// 用户标识
+			String openId = sat.getString("openid");
+			if ("snsapi_userinfo".equals(sat.getString("scope"))) {
+				
 				// // 获取用户信息
 				// SNSUserInfo snsUserInfo =
 				// userService.getSNSUserInfo(accessToken, openId);
@@ -93,25 +94,38 @@ public class UserController extends BaseController {
 				// request.setAttribute("snsUserInfo", snsUserInfo);
 				//
 				// return JSONObject.fromObject(snsUserInfo).toString();
-				JSONObject jsonObject = userService.getSNSUserInfo(accessToken, openId);
-				return jsonObject.toString();
+				JSONObject resp = userService.getSNSUserInfo(sat.getString("access_token"), openId);
+				if (resp.containsKey("errcode")) {
+					logger.error(resp.toString());
+					return resp.toString();
+				}
+				return resp.toString();
 			} else {
-				// 用户标识
-				String openId = wechatOauth2Token.getOpenId();
 				// 调用接口获取access_token
-				WeChatAccessToken at = coreService.getAccessToken(APP_ID, APP_SECRET);
+				JSONObject at = coreService.getAccessToken(APP_ID, APP_SECRET);
+				if (at.containsKey("errcode")) {
+					logger.error(at.toString());
+					return at.toString();
+				}
 
 				// WeChatUserInfo wechatUserInfo =
 				// userService.getWeChatUserInfo(at.getToken(), openId);
 				// logger.info(wechatUserInfo.toString());
 				//
 				// return JSONObject.fromObject(wechatUserInfo).toString();
-				JSONObject jsonObject = userService.getWeChatUserInfo(at.getToken(), openId);
-				return jsonObject.toString();
+				JSONObject resp = userService.getWeChatUserInfo(at.getString("access_token"), openId);
+				if (resp.containsKey("errcode")) {
+					logger.error(resp.toString());
+					return resp.toString();
+				}
+				return resp.toString();
 			}
 		}
-		logger.error("not authorised");
-		return "null";
+		ErrorMsg errMsg = new ErrorMsg();
+		errMsg.setErrCode("80001");
+		errMsg.setErrMsg("not authorised");
+		logger.error(JSONObject.fromObject(errMsg).toString());
+		return JSONObject.fromObject(errMsg).toString();
 	}
 
 	/**
@@ -126,7 +140,12 @@ public class UserController extends BaseController {
 	@ResponseBody
 	public String getWeChatUserInfo(HttpServletRequest request, HttpServletResponse response, @PathVariable String openId) {
 		// 调用接口获取access_token
-		WeChatAccessToken at = coreService.getAccessToken(APP_ID, APP_SECRET);
+		// 调用接口获取access_token
+		JSONObject at = coreService.getAccessToken(APP_ID, APP_SECRET);
+		if (at.containsKey("errcode")) {
+			logger.error(at.toString());
+			return at.toString();
+		}
 
 		// WeChatUserInfo wechatUserInfo =
 		// userService.getWeChatUserInfo(at.getToken(), openId);
@@ -136,15 +155,25 @@ public class UserController extends BaseController {
 		// else
 		// logger.error("user is null");
 		// return JSONObject.fromObject(wechatUserInfo).toString();
-		JSONObject jsonObject = userService.getWeChatUserInfo(at.getToken(), openId);
-		return jsonObject.toString();
+		JSONObject resp = userService.getWeChatUserInfo(at.getString("access_token"), openId);
+		if (resp.containsKey("errcode")) {
+			logger.error(resp.toString());
+			return resp.toString();
+		}
+		return resp.toString();
+
 	}
 
 	@RequestMapping(value = "/user/list/{nextOpenId}")
 	@ResponseBody
 	public String getWeChatUserList(HttpServletRequest request, HttpServletResponse response, @PathVariable String nextOpenId) {
 		// 调用接口获取access_token
-		WeChatAccessToken at = coreService.getAccessToken(APP_ID, APP_SECRET);
+		// 调用接口获取access_token
+		JSONObject at = coreService.getAccessToken(APP_ID, APP_SECRET);
+		if (at.containsKey("errcode")) {
+			logger.error(at.toString());
+			return at.toString();
+		}
 		if ("0".equals(nextOpenId))
 			nextOpenId = null;
 
@@ -158,7 +187,11 @@ public class UserController extends BaseController {
 		// }
 		//
 		// return JSONObject.fromObject(wechatUserList).toString();
-		JSONObject jsonObject = userService.getWeChatUserList(at.getToken(), nextOpenId);
-		return jsonObject.toString();
+		JSONObject resp = userService.getWeChatUserList(at.getString("access_token"), nextOpenId);
+		if (resp.containsKey("errcode")) {
+			logger.error(resp.toString());
+			return resp.toString();
+		}
+		return resp.toString();
 	}
 }

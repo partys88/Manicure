@@ -10,11 +10,15 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONObject;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.manicure.base.controller.BaseController;
 import com.manicure.base.helper.ConfigUtil;
+import com.manicure.keystone.entity.ErrorMsg;
 import com.manicure.keystone.entity.WeChatAccessToken;
 import com.manicure.keystone.service.impl.CoreService;
 import com.manicure.keystone.service.impl.MenuService;
@@ -32,21 +36,22 @@ public class MenuController extends BaseController {
 	CoreService coreService;
 
 	@RequestMapping(value = "/menu/create")
-	public void create(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	@ResponseBody
+	public String create(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		// 调用接口获取access_token
-		WeChatAccessToken at = coreService.getAccessToken(APP_ID, APP_SECRET);
-
-		if (null != at) {
-			// 调用接口创建菜单
-			int result = menuService.create(at.getToken(), ConfigUtil.getJson("menu.json"));
-
-			// 判断菜单创建结果
-			if (0 == result)
-				logger.info("菜单创建成功！");
-			else
-				logger.info("菜单创建失败，错误码：" + result);
+		// 调用接口获取access_token		
+		JSONObject at = coreService.getAccessToken(APP_ID, APP_SECRET);
+		if (at.containsKey("errcode")) {
+			logger.error(at.toString());
+			return at.toString();
 		}
-
+		
+		// 调用接口创建菜单
+		JSONObject resp = menuService.create(at.getString("access_token"), ConfigUtil.getJson("menu.json"));
+		if (resp.containsKey("errcode")) {
+			logger.error(resp.toString());
+			return resp.toString();
+		}
+		return resp.toString();
 	}
 }
