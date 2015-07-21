@@ -33,7 +33,10 @@ public class BaseService {
 	protected final String URL_USER_GET_INFO = ConfigUtil.getProperty(propertiesFile, "url.user.get.info");
 
 	protected final String URL_USER_GET_LIST = ConfigUtil.getProperty(propertiesFile, "url.user.get.list");
+	
+	protected final String URL_MATERIAL_GET_LIST = ConfigUtil.getProperty(propertiesFile, "url.material.get.list");
 
+	protected final String URL_MATERIAL_GET_DETAIL = ConfigUtil.getProperty(propertiesFile, "url.material.get.detail");
 	// logger
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 

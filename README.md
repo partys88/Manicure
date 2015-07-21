@@ -9,11 +9,17 @@ http://domain/Manicure/api/keystone/core/
 http://domain/Manicure/api/keystone/menu/create 
 
 ###	User API
-##### SNS user query
+##### Get SNS user
 http://domain/Manicure/api/keystone/user/query/sns/{openId}/{accessToken}
 ##### SNS user OAuth
 http://domain/Manicure/api/keystone/user/sns/oauth 
-##### WeChat user query
+##### Get WeChat user
 http://domain/Manicure/api/keystone/user/query/{openId} 
-##### WeChat user list (Query from the very beginning of the list when {nextOpenId} is 0)
+##### Get WeChat user (Query from the very beginning of the list when {nextOpenId} is 0)
 http://domain/Manicure/api/keystone/user/list/{nextOpenId}
+
+###	Material API
+##### Get material
+http://domain/Manicure/api/keystone/material/query/{mediaId}
+##### Get material list
+http://domain/Manicure/api/keystone/material/list
