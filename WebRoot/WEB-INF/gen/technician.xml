@@ -18,20 +18,18 @@
 			<property name="forceBigDecimals" value="false" />
 		</javaTypeResolver>
 		<!-- targetProject:自动生成代码的位置 -->
-		<javaModelGenerator targetPackage="com.manicure.product.entity" targetProject="Manicure">
+		<javaModelGenerator targetPackage="com.manicure.technician.entity" targetProject="Manicure">
 			<property name="enableSubPackages" value="true" />
 			<property name="trimStrings" value="true" />
 		</javaModelGenerator>
-		<sqlMapGenerator targetPackage="com.manicure.product.sqlmap" targetProject="Manicure">
+		<sqlMapGenerator targetPackage="com.manicure.technician.sqlmap" targetProject="Manicure">
 			<property name="enableSubPackages" value="true" />
 		</sqlMapGenerator>
-		<javaClientGenerator type="XMLMAPPER" targetPackage="com.manicure.product.mapper" targetProject="Manicure">
+		<javaClientGenerator type="XMLMAPPER" targetPackage="com.manicure.technician.mapper" targetProject="Manicure">
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 		<!-- tableName:用于自动生成代码的数据库表；domainObjectName:对应于数据库表的javaBean类名 -->
-		<table tableName="service" domainObjectName="Service" />
-		<table tableName="service_comment" domainObjectName="ServiceComment" />
-		<table tableName="service_type" domainObjectName="ServiceType" />
+		<table tableName="technician" domainObjectName="Technician" />
 
 	</context>
 </generatorConfiguration>
