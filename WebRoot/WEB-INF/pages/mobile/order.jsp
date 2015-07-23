@@ -24,8 +24,8 @@
 			<div data-role="navbar">
 				<ul>
 					<li><a id="nav_bar_btn_home" href="${ctx}/home" data-icon="home" data-ajax="false">首页</a></li>
-					<li><a id="nav_bar_btn_favs" href="#" data-icon="star" data-ajax="false">收藏</a></li>
-					<li><a id="nav_bar_btn_order" href="#" data-icon="shop" class="ui-btn-active" data-ajax="false">订单</a></li>
+					<li><a id="nav_bar_btn_favs"  data-icon="star" data-ajax="false">收藏</a></li>
+					<li><a id="nav_bar_btn_order"  data-icon="shop" class="ui-btn-active" data-ajax="false">订单</a></li>
 				</ul>
 			</div>
 			<!-- /navbar -->

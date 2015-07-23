@@ -68,12 +68,12 @@
 			</div>
 			<div class="ui-grid-solo" style="margin-top: 10px;">
 				<ul data-role="listview" data-inset="true">
-					<li><a href="#"> <img src="${ctx}/images/_assets/img/apple.png" class="ui-li-thumb">
+					<li><a > <img src="${ctx}/images/_assets/img/apple.png" class="ui-li-thumb">
 							<h2>低价热卖</h2>
 							<p>最新的低价商品</p>
 							
 					</a></li>
-					<li><a href="#"> <img src="${ctx}/images/_assets/img/blackberry_10.png" class="ui-li-thumb">
+					<li><a > <img src="${ctx}/images/_assets/img/blackberry_10.png" class="ui-li-thumb">
 							<h2>三号学员</h2>
 							<p>本店的优秀学员展示</p>
 							
@@ -87,8 +87,8 @@
 		<div data-role="footer" data-position="fixed">
 			<div data-role="navbar">
 				<ul>
-					<li><a id="nav_bar_btn_home" href="#" data-icon="home" class="ui-btn-active" data-ajax="false">首页</a></li>
-					<li><a id="nav_bar_btn_favs" href="#" data-icon="star" data-ajax="false">收藏</a></li>
+					<li><a id="nav_bar_btn_home"  data-icon="home" class="ui-btn-active" data-ajax="false">首页</a></li>
+					<li><a id="nav_bar_btn_favs"  data-icon="star" data-ajax="false">收藏</a></li>
 					<li><a id="nav_bar_btn_order" href="${ctx}/order" data-icon="shop" data-ajax="false">订单</a></li>
 				</ul>
 			</div>
