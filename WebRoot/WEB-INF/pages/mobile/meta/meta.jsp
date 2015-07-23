@@ -12,8 +12,10 @@
 <script src="${ctx}/js/jquery.mobile-1.4.5.min.js"></script>
 <script src="${ctx}/js/jquery.easing.1.3.js"></script>
 <script src="${ctx}/js/camera.min.js"></script>
+<script src="${ctx}/js/global.js"></script>
 <link rel="shortcut icon" href="${ctx}/images/favicon.ico">
 <link rel="stylesheet" href="${ctx}/css/themes/default/jquery.mobile-1.4.5.min.css">
 <link rel="stylesheet" href="${ctx}/css/themes/manicure/manicure.css" />
 <link rel="stylesheet" href="${ctx}/css/themes/manicure/jquery.mobile.icons.min.css" />
 <link rel="stylesheet" href="${ctx}/css/camera.css">
+

@@ -1,15 +1,11 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ include file="meta/config.jsp"%>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE html>
 <html>
 <head>
 <base href="<%=basePath%>">
 <%@ include file="meta/meta.jsp"%>
 <style type="text/css">
-.ui-page {
-	-webkit-backface-visibility: hidden;
-}
-
 .btnContainer {
 	padding: 10px;
 }
@@ -18,14 +14,6 @@
 	margin-top: 50px;
 }
 </style>
-<script type="text/javascript">
-	$(document).bind("pageshow", function() {
-
-		
-
-		//alert();
-	});
-</script>
 
 </head>
 <body>
@@ -36,10 +24,10 @@
 		<!-- /header -->
 		<div role="main" class="ui-content mainContainer">
 			<div class="btnContainer">
-				<a href="${ctx}/home" data-prefetch="true" data-ajax="false" data-transition="slidefade" class="ui-btn ui-shadow ui-corner-all show-page-loading-msg">到店服务</a>
+				<a href="${ctx}/home" data-ajax="false" class="ui-btn ui-shadow ui-corner-all show-page-loading-msg">到店服务</a>
 			</div>
 			<div class="btnContainer">
-				<a href="${ctx}/home" data-prefetch="true" data-transition="slidefade" class="ui-btn ui-shadow ui-corner-all show-page-loading-msg">上门服务</a>
+				<a href="${ctx}/home" data-ajax="false" class="ui-btn ui-shadow ui-corner-all show-page-loading-msg">上门服务</a>
 			</div>
 
 		</div>

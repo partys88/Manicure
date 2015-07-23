@@ -24,3 +24,18 @@ http://domain/Manicure/api/keystone/material/query/{mediaId}
 ##### Get material list
 http://domain/Manicure/api/keystone/material/list
 
+
+
+###	Mobile web page
+##### Index
+http://domain/Manicure/mobile/
+http://domain/Manicure/mobile/index
+##### Home
+http://domain/Manicure/mobile/home
+##### Service choose
+http://domain/Manicure/mobile/service
+##### Order list
+http://domain/Manicure/mobile/order
+##### Service list
+http://domain/Manicure/mobile/list
+

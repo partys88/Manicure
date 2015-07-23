@@ -20,12 +20,24 @@ public class MobileController extends BaseController {
 	public String home() {
 		return "/mobile/home";
 	}
+
 	@RequestMapping(value = "/order")
 	public String order() {
 		return "/mobile/order";
 	}
+
 	@RequestMapping(value = "/service")
 	public String service() {
+		return "/mobile/service";
+	}
+
+	@RequestMapping(value = "/list")
+	public String list() {
+		return "/mobile/list";
+	}
+	
+	@RequestMapping(value = {"/","/index"})
+	public String index() {
 		return "/mobile/service";
 	}
 }
