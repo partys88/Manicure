@@ -1,13 +1,13 @@
 /**
  * 
  */
-package com.manicure.keystone.entity.material;
+package com.manicure.keystone.entity.request;
 
 /**
  * @author Barrie
  *
  */
-public class GetMaterialReq {
+public class MaterialReq {
 	private String media_id;
 
 	/**

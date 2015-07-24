@@ -1,13 +1,13 @@
 /**
  * 
  */
-package com.manicure.keystone.entity.material;
+package com.manicure.keystone.entity.request;
 
 /**
  * @author Barrie
  *
  */
-public class GetMaterialListReq {
+public class MaterialListReq {
 	public static String TYPE_IMAGE = "image";
 	public static String TYPE_VIDEO = "video";
 	public static String TYPE_VOICE = "voice";

@@ -2,40 +2,44 @@
 A WeChat server
 
 ###	Server API
-http://domain/Manicure/api/keystone/core/
+http://www.mydomain.com/api/keystone/core/
 
 ###	Menu API
 ##### create
-http://domain/Manicure/api/keystone/menu/create 
+http://www.mydomain.com/api/keystone/menu/create 
 
 ###	User API
 ##### Get SNS user
-http://domain/Manicure/api/keystone/user/query/sns/{openId}/{accessToken}
+http://www.mydomain.com/api/keystone/user/query/sns/{openId}/{accessToken}
 ##### SNS user OAuth
-http://domain/Manicure/api/keystone/user/sns/oauth 
+http://www.mydomain.com/api/keystone/user/sns/oauth 
 ##### Get WeChat user
-http://domain/Manicure/api/keystone/user/query/{openId} 
+http://www.mydomain.com/api/keystone/user/query/{openId} 
 ##### Get WeChat user (Query from the very beginning of the list when {nextOpenId} is 0)
-http://domain/Manicure/api/keystone/user/list/{nextOpenId}
+http://www.mydomain.com/api/keystone/user/list/{nextOpenId}
 
 ###	Material API
 ##### Get material
-http://domain/Manicure/api/keystone/material/query/{mediaId}
+http://www.mydomain.com/api/keystone/material/query/{mediaId}
 ##### Get material list
-http://domain/Manicure/api/keystone/material/list
+http://www.mydomain.com/api/keystone/material/list
 
-
+###	Shop API
+##### Get shop (Request Method GET)
+http://www.mydomain.com/api/keystone/shop/query/{poiId}
+##### Get shop list  (Request Method GET)
+http://www.mydomain.com/api/keystone//shop/list/{begain}/{limit}
 
 ###	Mobile web page
 ##### Index
-http://domain/Manicure/mobile/
-http://domain/Manicure/mobile/index
+http://www.mydomain.com/mobile/
+http://www.mydomain.com/mobile/index
 ##### Home
-http://domain/Manicure/mobile/home
+http://www.mydomain.com/mobile/home
 ##### Service choose
-http://domain/Manicure/mobile/service
+http://www.mydomain.com/mobile/service
 ##### Order list
-http://domain/Manicure/mobile/order
+http://www.mydomain.com/mobile/order
 ##### Service list
-http://domain/Manicure/mobile/list
+http://www.mydomain.com/mobile/list
 

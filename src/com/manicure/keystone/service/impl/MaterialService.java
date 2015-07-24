@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 
 import com.manicure.base.service.BaseService;
 import com.manicure.keystone.entity.ErrorMsg;
-import com.manicure.keystone.entity.material.GetMaterialListReq;
-import com.manicure.keystone.entity.material.GetMaterialReq;
+import com.manicure.keystone.entity.request.MaterialListReq;
+import com.manicure.keystone.entity.request.MaterialReq;
 import com.manicure.keystone.service.iface.ICoreService;
 import com.manicure.keystone.service.iface.IMaterialService;
 
@@ -32,9 +32,9 @@ public class MaterialService extends BaseService implements IMaterialService {
 
 		String url = URL_MATERIAL_GET_LIST.replace("ACCESS_TOKEN", accessToken);
 
-		GetMaterialListReq request = new GetMaterialListReq();
+		MaterialListReq request = new MaterialListReq();
 
-		request.setType(GetMaterialListReq.TYPE_NEWS);
+		request.setType(MaterialListReq.TYPE_NEWS);
 		request.setOffset(0);
 		request.setCount(20);
 		JSONObject jsonObject = coreService.httpsRequest(url, "POST", JSONObject.fromObject(request).toString());
@@ -59,7 +59,7 @@ public class MaterialService extends BaseService implements IMaterialService {
 
 		String url = URL_MATERIAL_GET_DETAIL.replace("ACCESS_TOKEN", accessToken);
 
-		GetMaterialReq request = new GetMaterialReq();
+		MaterialReq request = new MaterialReq();
 
 		request.setMedia_id(mediaId);
 
