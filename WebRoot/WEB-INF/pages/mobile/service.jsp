@@ -24,10 +24,10 @@
 		<!-- /header -->
 		<div role="main" class="ui-content mainContainer">
 			<div class="btnContainer">
-				<a href="${ctx}/home" data-ajax="false" class="ui-btn ui-shadow ui-corner-all show-page-loading-msg">到店服务</a>
+				<a href="${ctx}/home" class="ui-btn ui-shadow ui-corner-all show-page-loading-msg">到店服务</a>
 			</div>
 			<div class="btnContainer">
-				<a href="${ctx}/home" data-ajax="false" class="ui-btn ui-shadow ui-corner-all show-page-loading-msg">上门服务</a>
+				<a href="${ctx}/home" class="ui-btn ui-shadow ui-corner-all show-page-loading-msg">上门服务</a>
 			</div>
 
 		</div>

@@ -10,12 +10,12 @@
 </SCRIPT>
 <script src="${ctx}/js/jquery.js"></script>
 <script src="${ctx}/js/jquery.mobile-1.4.5.min.js"></script>
-<script src="${ctx}/js/jquery.easing.1.3.js"></script>
-<script src="${ctx}/js/camera.min.js"></script>
 <script src="${ctx}/js/global.js"></script>
+<script src="${ctx}/js/jquery.sliderPro.min.js"></script>
+<script src="${ctx}/_assets/js/index.js"></script>
 <link rel="shortcut icon" href="${ctx}/images/favicon.ico">
 <link rel="stylesheet" href="${ctx}/css/themes/default/jquery.mobile-1.4.5.min.css">
 <link rel="stylesheet" href="${ctx}/css/themes/manicure/manicure.css" />
 <link rel="stylesheet" href="${ctx}/css/themes/manicure/jquery.mobile.icons.min.css" />
 <link rel="stylesheet" href="${ctx}/css/camera.css">
-
+<link rel="stylesheet" href="${ctx}/css/slider-pro.min.css">

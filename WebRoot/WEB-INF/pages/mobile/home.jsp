@@ -6,77 +6,79 @@
 <base href="<%=basePath%>">
 <title>米兰美甲艺社</title>
 <%@ include file="meta/meta.jsp"%>
+<link rel="stylesheet" type="text/css" href="${ctx}/css/slider-pro.min.css" media="screen" />
+<script type="text/javascript" src="${ctx}/js/jquery.sliderPro.min.js"></script>
+<script type="text/javascript">
+	$(document).on("pagecontainerchange", function() {
+
+	});
+</script>
 </head>
 <body>
-	<div data-role="page" id="home-page">
+	<div data-role="page" id="home-page" data-title="首页">
 		<div data-role="header">
+			<a data-rel="back" class="ui-btn ui-btn-left ui-alt-icon ui-nodisc-icon ui-corner-all ui-btn-icon-notext ui-icon-carat-l">后退</a>
 			<h2>米兰美甲艺社</h2>
 		</div>
 		<div role="main" id="main">
 			<div class="ui-grid-solo">
-				<div class="camera_wrap camera_azure_skin " id="camera_wrap_1">
-					<div data-thumb="${ctx}/images/slides/thumbs/bridge.jpg" data-src="${ctx}/images/slides/bridge.jpg">
-						<div class="camera_caption fadeFromBottom">
-							<em>图1</em>
+				<div id="home-slider" class="slider-pro">
+					<div class="sp-slides">
+						<div class="sp-slide">
+							<img class="sp-image" src="${ctx}/css/images/blank.gif" data-src="${ctx}/images/slides/bridge.jpg" />
+
 						</div>
-					</div>
-					<div data-thumb="${ctx}/images/slides/thumbs/leaf.jpg" data-src="${ctx}/images/slides/leaf.jpg">
-						<div class="camera_caption fadeFromBottom">
-							<em>图2</em>
+
+						<div class="sp-slide">
+							<img class="sp-image" src="${ctx}/css/images/blank.gif" data-src="${ctx}/images/slides/leaf.jpg" />
+
 						</div>
-					</div>
-					<div data-thumb="${ctx}/images/slides/thumbs/road.jpg" data-src="${ctx}/images/slides/road.jpg">
-						<div class="camera_caption fadeFromBottom">
-							<em>图3</em>
+
+						<div class="sp-slide">
+							<img class="sp-image" src="${ctx}/css/images/blank.gif" data-src="${ctx}/images/slides/road.jpg" />
+
 						</div>
-					</div>
-					<div data-thumb="${ctx}/images/slides/thumbs/sea.jpg" data-src="${ctx}/images/slides/sea.jpg">
-						<div class="camera_caption fadeFromBottom">
-							<em>图4</em>
+
+						<div class="sp-slide">
+							<img class="sp-image" src="${ctx}/css/images/blank.gif" data-src="${ctx}/images/slides/sea.jpg" />
+
 						</div>
+
 					</div>
-					<div data-thumb="${ctx}/images/slides/thumbs/shelter.jpg" data-src="${ctx}/images/slides/shelter.jpg">
-						<div class="camera_caption fadeFromBottom">
-							<em>图5</em>
-						</div>
-					</div>
-					<div data-thumb="${ctx}/images/slides/thumbs/tree.jpg" data-src="${ctx}/images/slides/tree.jpg">
-						<div class="camera_caption fadeFromBottom">
-							<em>图6</em>
-						</div>
-					</div>
+
+
 				</div>
 			</div>
-			<div class="ui-grid-b">
+			<div class="ui-grid-b" style="font-size: 0.8em;text-align: center;">
 				<div class="ui-block-a">
-					<a href="${ctx}/list" data-theme="b" data-ajax="false" data-role="button">美甲</a>
+					<a href="${ctx}/list" data-theme="b" data-prefetch="true" data-role="button"  data-icon="check" data-iconpos="top">美甲</a>
 				</div>
 				<div class="ui-block-b">
-					<a href="${ctx}/list" data-theme="c" data-ajax="false" data-role="button">美足</a>
+					<a href="${ctx}/list" data-theme="c" data-prefetch="true" data-role="button" data-icon="cloud" data-iconpos="top">美足</a>
 				</div>
 				<div class="ui-block-c">
-					<a href="${ctx}/list" data-theme="d" data-ajax="false" data-role="button">美婕</a>
+					<a href="${ctx}/list" data-theme="d" data-prefetch="true" data-role="button" data-icon="clock" data-iconpos="top">美婕</a>
 				</div>
 			</div>
-			<div class="ui-grid-a">
+			<div class="ui-grid-a" style="font-size: 0.8em;text-align: center;">
 				<div class="ui-block-a">
-					<a href="${ctx}/list" data-theme="e" data-ajax="false" data-role="button">化妆</a>
+					<a href="${ctx}/list" data-theme="e" data-prefetch="true" data-role="button"  data-icon="edit" data-iconpos="top">化妆</a>
 				</div>
 				<div class="ui-block-b">
-					<a href="${ctx}/list" data-theme="f" data-ajax="false" data-role="button">护理</a>
+					<a href="${ctx}/list" data-theme="f" data-prefetch="true" data-role="button" data-icon="eye" data-iconpos="top">护理</a>
 				</div>
 			</div>
 			<div class="ui-grid-solo" style="margin-top: 10px;">
 				<ul data-role="listview" data-inset="true">
-					<li><a > <img src="${ctx}/images/_assets/img/apple.png" class="ui-li-thumb">
+					<li><a> <img src="${ctx}/_assets/img/apple.png" class="ui-li-thumb">
 							<h2>低价热卖</h2>
 							<p>最新的低价商品</p>
-							
+
 					</a></li>
-					<li><a > <img src="${ctx}/images/_assets/img/blackberry_10.png" class="ui-li-thumb">
+					<li><a> <img src="${ctx}/_assets/img/blackberry_10.png" class="ui-li-thumb">
 							<h2>三号学员</h2>
 							<p>本店的优秀学员展示</p>
-							
+
 					</a></li>
 
 				</ul>
@@ -84,16 +86,7 @@
 			<!-- /content -->
 		</div>
 		<!-- #camera_wrap_1 -->
-		<div data-role="footer" data-position="fixed">
-			<div data-role="navbar">
-				<ul>
-					<li><a id="nav_bar_btn_home"  data-icon="home" class="ui-btn-active" data-ajax="false">首页</a></li>
-					<li><a id="nav_bar_btn_favs"  data-icon="star" data-ajax="false">收藏</a></li>
-					<li><a id="nav_bar_btn_order" href="${ctx}/order" data-icon="shop" data-ajax="false">订单</a></li>
-				</ul>
-			</div>
-			<!-- /navbar -->
-		</div>
+		<%@ include file="meta/footer.jsp"%>
 	</div>
 	</div>
 </body>

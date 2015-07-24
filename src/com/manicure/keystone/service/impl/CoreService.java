@@ -32,7 +32,7 @@ import org.springframework.stereotype.Service;
 import com.manicure.base.helper.CustomX509TrustManager;
 import com.manicure.base.helper.Encoder;
 import com.manicure.base.service.BaseService;
-import com.manicure.keystone.entity.ErrorMsg;
+import com.manicure.keystone.entity.error.ErrorMsg;
 import com.manicure.keystone.entity.response.Article;
 import com.manicure.keystone.entity.response.NewsMessage;
 import com.manicure.keystone.entity.response.TextMessage;

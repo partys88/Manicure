@@ -3,45 +3,53 @@ $(document)
 				"click",
 				"a",
 				function() {
-					if ($(this).attr("href") != "#") {
-						var $this = $(this), theme = $this.jqmData("theme")
-								|| $.mobile.loader.prototype.options.theme, msgText = $this
-								.jqmData("msgtext")
-								|| $.mobile.loader.prototype.options.text, textVisible = $this
-								.jqmData("textvisible")
-								|| $.mobile.loader.prototype.options.textVisible, textonly = !!$this
-								.jqmData("textonly");
-						html = $this.jqmData("html") || "";
-						$.mobile.loading("show", {
-							text : msgText,
-							textVisible : textVisible,
-							theme : theme,
-							textonly : textonly,
-							html : html
-						});
-					}
+					// if ($(this).attr("href") != "#") {
+					var $this = $(this), theme = $this.jqmData("theme")
+							|| $.mobile.loader.prototype.options.theme, msgText = $this
+							.jqmData("msgtext")
+							|| $.mobile.loader.prototype.options.text, textVisible = $this
+							.jqmData("textvisible")
+							|| $.mobile.loader.prototype.options.textVisible, textonly = !!$this
+							.jqmData("textonly");
+					html = $this.jqmData("html") || "";
+					$.mobile.loading("show", {
+						text : msgText,
+						textVisible : textVisible,
+						theme : theme,
+						textonly : textonly,
+						html : html
+					});
+					// }
 				})
 
-$(document).on('pagecontainershow', function(e, ui) {
-	(function() {
-		if (ui.toPage[0].id != "home-page")
-			return;
-		var script = document.createElement('script');
-		script.type = 'text/javascript';
-		script.async = true;
-		script.src = _ctx + "/js/home.js";
-		var s = document.getElementsByTagName('script')[0];
-		s.parentNode.insertBefore(script, s);
-
-	})();
-
+$(function() {
+	$("[data-role='navbar']").navbar();
+	$("[data-role='header'], [data-role='footer']").toolbar();
 });
+// Update the contents of the toolbars
+$(document).on("pagecontainerchange", function() {
+	// Each of the four pages in this demo has a data-title attribute
+	// which value is equal to the text of the nav button
+	// For example, on first page: <div data-role="page" data-title="Info">
+	var current = $(".ui-page-active").jqmData("title");
+	// Change the heading
+	$("[data-role='header'] h1").text(current);
+	// Remove active class from nav buttons
+	$("[data-role='navbar'] a.ui-btn-active").removeClass("ui-btn-active");
+	// Add active class to current nav button
+	$("[data-role='navbar'] a").each(function() {
+		if ($(this).text() === current) {
+			$(this).addClass("ui-btn-active");
+		}
+	});
 
-$(document).on('pagecontainershow', function(e, ui) {
-	(function() {
-		if (ui.toPage[0].id != "order-page")
-			return;
-
-	})();
+	$('#home-slider').sliderPro({
+		width : "100%",
+		aspectRatio : 2,
+		arrows : true,
+		buttons : false,
+		fullScreen : false,
+		shuffle : true,
+	});
 
 });

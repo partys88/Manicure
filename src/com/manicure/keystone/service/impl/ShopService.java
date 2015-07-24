@@ -10,9 +10,9 @@ import net.sf.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import com.manicure.base.service.BaseService;
-import com.manicure.keystone.entity.ErrorMsg;
-import com.manicure.keystone.entity.request.ShopReq;
-import com.manicure.keystone.entity.request.ShopListReq;
+import com.manicure.keystone.entity.error.ErrorMsg;
+import com.manicure.keystone.entity.request.shop.ShopListReq;
+import com.manicure.keystone.entity.request.shop.ShopReq;
 import com.manicure.keystone.service.iface.ICoreService;
 import com.manicure.keystone.service.iface.IShopService;
 

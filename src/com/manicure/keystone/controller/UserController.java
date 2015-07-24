@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.manicure.base.controller.BaseController;
-import com.manicure.keystone.entity.ErrorMsg;
+import com.manicure.keystone.entity.error.ErrorMsg;
 import com.manicure.keystone.service.impl.CoreService;
 import com.manicure.keystone.service.impl.UserService;
 
