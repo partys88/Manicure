@@ -6,13 +6,6 @@
 <base href="<%=basePath%>">
 <title>Home</title>
 <%@ include file="meta/meta.jsp"%>
-
-
-<script type="text/javascript">
-	$(document).on("pagecontainerchange", function() {
-
-	});
-</script>
 </head>
 <body>
 	<div data-role="page" id="space-page" data-title="我的">

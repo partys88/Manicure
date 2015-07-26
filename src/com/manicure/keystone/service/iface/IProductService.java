@@ -11,4 +11,6 @@ import net.sf.json.JSONObject;
  */
 public interface IProductService {
 	public JSONObject getProductList(String accessToken, int status);
+
+	public JSONObject getProduct(String accessToken, String productId);
 }

@@ -24,10 +24,10 @@
 		<!-- /header -->
 		<div role="main" class="ui-content mainContainer">
 			<div class="btnContainer">
-				<a href="${ctx}/home" class="ui-btn ui-btn-d ui-shadow ui-corner-all">到店服务</a>
+				<a href="${ctx}/mobile/home" class="ui-btn ui-btn-d ui-shadow ui-corner-all">到店服务</a>
 			</div>
 			<div class="btnContainer">
-				<a href="${ctx}/home" class="ui-btn ui-btn-d ui-shadow ui-corner-all">上门服务</a>
+				<a href="${ctx}/mobile/home" class="ui-btn ui-btn-d ui-shadow ui-corner-all">上门服务</a>
 			</div>
 
 		</div>

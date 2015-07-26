@@ -25,15 +25,15 @@ import com.manicure.keystone.service.impl.ProductService;
  */
 @Controller
 @RequestMapping(value = "/api/keystone")
-public class ProductController  extends BaseController{
+public class ProductController extends BaseController {
 	@Resource
 	CoreService coreService;
 	@Resource
 	ProductService productService;
-	
+
 	@RequestMapping(value = "/product/list/{status}", method = RequestMethod.GET)
 	@ResponseBody
-	public String getShopList(HttpServletRequest request, HttpServletResponse response, @PathVariable int status) {
+	public String getProductList(HttpServletRequest request, HttpServletResponse response, @PathVariable int status) {
 		JSONObject at = coreService.getAccessToken(APP_ID, APP_SECRET);
 		if (at.containsKey("errcode")) {
 			logger.error(at.toString());
@@ -41,11 +41,28 @@ public class ProductController  extends BaseController{
 		}
 
 		JSONObject resp = productService.getProductList(at.getString("access_token"), status);
-		if (resp.containsKey("errcode")) {
+		if (resp.containsKey("errcode") && !resp.getString("errcode").equals("0")) {
 			logger.error(resp.toString());
 			return resp.toString();
 		}
 		return resp.toString();
 	}
-	
+
+	@RequestMapping(value = "/product/query/{productId}", method = RequestMethod.GET)
+	@ResponseBody
+	public String getProduct(HttpServletRequest request, HttpServletResponse response, @PathVariable String productId) {
+		JSONObject at = coreService.getAccessToken(APP_ID, APP_SECRET);
+		if (at.containsKey("errcode")) {
+			logger.error(at.toString());
+			return at.toString();
+		}
+
+		JSONObject resp = productService.getProduct(at.getString("access_token"), productId);
+		if (resp.containsKey("errcode") && !resp.getString("errcode").equals("0")) {
+			logger.error(resp.toString());
+			return resp.toString();
+		}
+		return resp.toString();
+	}
+
 }

@@ -26,27 +26,27 @@ $(document).on('pagecontainershow', function(e, ui) {
 		
 		function loadAllOrders(json) {
 			$("#page-order-list-orders").empty();
-			AppendListItem("#page-order-list-orders", "#", _ctx + "/_assets/img/blackberry_10.png", "优雅裸色", "简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介", "待评价");
-			AppendListItem("#page-order-list-orders", "#", _ctx + "/_assets/img/lumia_800.png", "气质款", "简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介", "已完成");
-			AppendListItem("#page-order-list-orders", "#", _ctx + "/_assets/img/galaxy_express.png", "红唇豹纹", "简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介", "待评价");
-			AppendListItem("#page-order-list-orders", "#", _ctx + "/_assets/img/nexus_7.png", "喜庆甲", "简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介", "已完成");
-			AppendListItem("#page-order-list-orders", "#", _ctx + "/_assets/img/firefox_os.png", "俏皮粉", "简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介", "进行中");
-			AppendListItem("#page-order-list-orders", "#", _ctx + "/_assets/img/tizen.png", "纯色", "简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介", "进行中");
+			AppendListItem("#page-order-list-orders", "#", _ctx + "/mobile/_assets/img/blackberry_10.png", "优雅裸色", "简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介", "待评价");
+			AppendListItem("#page-order-list-orders", "#", _ctx + "/mobile/_assets/img/lumia_800.png", "气质款", "简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介", "已完成");
+			AppendListItem("#page-order-list-orders", "#", _ctx + "/mobile/_assets/img/galaxy_express.png", "红唇豹纹", "简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介", "待评价");
+			AppendListItem("#page-order-list-orders", "#", _ctx + "/mobile/_assets/img/nexus_7.png", "喜庆甲", "简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介", "已完成");
+			AppendListItem("#page-order-list-orders", "#", _ctx + "/mobile/_assets/img/firefox_os.png", "俏皮粉", "简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介", "进行中");
+			AppendListItem("#page-order-list-orders", "#", _ctx + "/mobile/_assets/img/tizen.png", "纯色", "简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介", "进行中");
 
 			$("#page-order-list-orders").listview('refresh');
 		}
 
 		function loadProcessingOrders(json) {
 			$("#page-order-list-orders").empty();
-			AppendListItem("#page-order-list-orders", "#", _ctx + "/_assets/img/firefox_os.png", "俏皮粉", "简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介", "进行中");
-			AppendListItem("#page-order-list-orders", "#", _ctx + "/_assets/img/tizen.png", "纯色", "简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介", "进行中");
+			AppendListItem("#page-order-list-orders", "#", _ctx + "/mobile/_assets/img/firefox_os.png", "俏皮粉", "简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介", "进行中");
+			AppendListItem("#page-order-list-orders", "#", _ctx + "/mobile/_assets/img/tizen.png", "纯色", "简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介", "进行中");
 			$("#page-order-list-orders").listview('refresh');
 		}
 
 		function loadNotEvaluatedOrders(json) {
 			$("#page-order-list-orders").empty();
-			AppendListItem("#page-order-list-orders", "#", _ctx + "/_assets/img/blackberry_10.png", "优雅裸色", "简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介", "待评价");
-			AppendListItem("#page-order-list-orders", "#", _ctx + "/_assets/img/galaxy_express.png", "红唇豹纹", "简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介", "待评价");
+			AppendListItem("#page-order-list-orders", "#", _ctx + "/mobile/_assets/img/blackberry_10.png", "优雅裸色", "简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介", "待评价");
+			AppendListItem("#page-order-list-orders", "#", _ctx + "/mobile/_assets/img/galaxy_express.png", "红唇豹纹", "简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介", "待评价");
 			$("#page-order-list-orders").listview('refresh');
 		}
 

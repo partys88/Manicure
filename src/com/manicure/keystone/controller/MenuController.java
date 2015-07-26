@@ -47,15 +47,20 @@ public class MenuController extends BaseController {
 		}
 		String menuStr = ConfigUtil.getJson("menu.json");
 
-		String urlHome = URL_SNS_OAUTH2_REDIRECT.replace("REDIRECT_URI", Encoder.urlEncodeUTF8("http://barrieshieh.tunnel.mobi/Manicure/mobile/index")).replace("APPID", APP_ID).replace("SCOPE", "snsapi_base").replace("STATE", "STATE");
+		String urlHome = URL_SNS_OAUTH2_REDIRECT.replace("REDIRECT_URI", Encoder.urlEncodeUTF8("http://barrieshieh.tunnel.mobi/Manicure/mobile/index")).replace("APPID", APP_ID)
+				.replace("SCOPE", "snsapi_base").replace("STATE", "STATE");
 		menuStr = menuStr.replace(MenuService.V2002_WEB_HOME, urlHome);
-		String urlOrder = UrlUtil.getServerUrl(request, "/order");
+		String urlOrder = URL_SNS_OAUTH2_REDIRECT.replace("REDIRECT_URI", Encoder.urlEncodeUTF8("http://barrieshieh.tunnel.mobi/Manicure/mobile/order")).replace("APPID", APP_ID)
+				.replace("SCOPE", "snsapi_base").replace("STATE", "STATE");
 		menuStr = menuStr.replace(MenuService.V3002_ORDER, urlOrder);
-		String urlNewArrived = UrlUtil.getServerUrl(request, "/list");
+		String urlNewArrived = URL_SNS_OAUTH2_REDIRECT.replace("REDIRECT_URI", Encoder.urlEncodeUTF8("http://barrieshieh.tunnel.mobi/Manicure/mobile/index")).replace("APPID", APP_ID)
+				.replace("SCOPE", "snsapi_base").replace("STATE", "STATE");
 		menuStr = menuStr.replace(MenuService.V1003_NEW_ARRIVED, urlNewArrived);
-		String urlLottery = UrlUtil.getServerUrl(request, "/home");
+		String urlLottery = URL_SNS_OAUTH2_REDIRECT.replace("REDIRECT_URI", Encoder.urlEncodeUTF8("http://barrieshieh.tunnel.mobi/Manicure/mobile/home")).replace("APPID", APP_ID)
+				.replace("SCOPE", "snsapi_base").replace("STATE", "STATE");
 		menuStr = menuStr.replace(MenuService.V1001_LOTTERY, urlLottery);
-		String urlAddress = UrlUtil.getServerUrl(request, "/home");
+		String urlAddress = URL_SNS_OAUTH2_REDIRECT.replace("REDIRECT_URI", Encoder.urlEncodeUTF8("http://barrieshieh.tunnel.mobi/Manicure/mobile/home")).replace("APPID", APP_ID)
+				.replace("SCOPE", "snsapi_base").replace("STATE", "STATE");
 		menuStr = menuStr.replace(MenuService.V3001_ADDREDD, urlAddress);
 		logger.info(menuStr);
 		// 调用接口创建菜单

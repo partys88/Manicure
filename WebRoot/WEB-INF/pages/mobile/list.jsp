@@ -69,17 +69,17 @@
 						for="radio-choice-h-2c">法式</label> <input type="radio" name="radio-choice-h-2" id="radio-choice-h-2d" value="other"> <label for="radio-choice-h-2d">日韩</label>
 				</fieldset>
 			</form>
-			
+
 
 			<div class="ui-grid-solo">
 				<ul data-role="listview" data-inset="true" id="page-list-list-service">
-					<!-- 
-					<li><a href="#"> <img src="" class="ui-li-thumb">
-							<h2>Demo</h2>
-							<p>Demo</p>
-							<p class="ui-li-aside">Demo</p>
+
+					<li><a href="#"> <img src="${ctx}/mobile/_assets/img/apple.png" class="ui-li-thumb">
+							<h2>无商品</h2>
+							<p>没有商品</p>
+							<p class="ui-li-aside">¥0</p>
 					</a></li>
-					 -->
+
 				</ul>
 
 			</div>
