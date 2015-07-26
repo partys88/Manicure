@@ -4,24 +4,24 @@
 		   "name":"最新咨询",
            "sub_button":[
             {
-               "type":"click",
+               "type":"view",
                "name":"刮刮卡",
-               "key":"V1004_LOTTERY"
+               "url":"V1001_LOTTERY"
             },
             {
                "type":"click",
                "name":"优惠券",
-               "key":"V1003_VOUVHER"
+               "key":"V1002_VOUVHER"
             },
             {
-               "type":"click",
+               "type":"view",
                "name":"当季新品",
-               "key":"V1002_NEW_ARRIVED"
+               "url":"V1003_NEW_ARRIVED"
             },
             {
                "type":"click",
                "name":"黑板报",
-               "key":"V1001_NEWS"
+               "key":"V1004_NEWS"
             }]
       },
       {
@@ -33,23 +33,23 @@
                "key":"V2001_USER_GUID"
             },
             {
-               "type":"click",
+               "type":"view",
                "name":"米兰艺社",
-               "key":"V2001_WEB_HOME"
+               "url":"V2002_WEB_HOME"
             }]
       },
       {
            "name":"我的米宝",
            "sub_button":[
             {
-               "type":"click",
+               "type":"view",
                "name":"门店地址",
-               "key":"V3001_ADDREDD"
+               "url":"V3001_ADDREDD"
             },
             {
-               "type":"click",
+               "type":"view",
                "name":"我的订单",
-               "key":"V3001_ORDER"
+               "url":"V3002_ORDER"
             }]
        }]
  }

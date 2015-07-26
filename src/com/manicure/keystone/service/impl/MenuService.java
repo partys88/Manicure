@@ -3,17 +3,25 @@
  */
 package com.manicure.keystone.service.impl;
 
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import net.sf.json.JSONObject;
 
 import org.springframework.stereotype.Service;
 
+import com.manicure.base.helper.Encoder;
 import com.manicure.base.helper.HttpClientUtil;
 import com.manicure.base.service.BaseService;
 import com.manicure.keystone.entity.error.ErrorMsg;
+import com.manicure.keystone.entity.response.Article;
+import com.manicure.keystone.entity.response.NewsMessage;
+import com.manicure.keystone.entity.response.TextMessage;
 import com.manicure.keystone.service.iface.ICoreService;
 
 /**
@@ -22,47 +30,159 @@ import com.manicure.keystone.service.iface.ICoreService;
  */
 @Service
 public class MenuService extends BaseService {
+	
+	public static final String V1001_LOTTERY = "V1001_LOTTERY";
+	public static final String V1002_VOUVHER = "V1002_VOUVHER";
+	public static final String V1003_NEW_ARRIVED = "V1003_NEW_ARRIVED";
+	public static final String V1004_NEWS = "V1004_NEWS";
+	public static final String V2001_USER_GUID = "V2001_USER_GUID";
+	public static final String V2002_WEB_HOME = "V2002_WEB_HOME";
+	public static final String V3001_ADDREDD = "V3001_ADDREDD";
+	public static final String V3002_ORDER = "V3002_ORDER";
 
 	@Resource
 	ICoreService coreService;
+	@Resource
+	MessageService messageService;
 
 	/**
-	 * 创建菜单
 	 * 
-	 * @param menu
-	 *            菜单实例
 	 * @param accessToken
-	 *            有效的access_token
-	 * @return 0表示成功，其他值表示失败
-	 * @throws IOException
+	 * @param json
+	 * @return
 	 */
 	public JSONObject create(String accessToken, JSONObject json) {
-		// int result = 0;
 
 		// 拼装创建菜单的url
-		String url = URL_MENU_CREATE.replace("ACCESS_TOKEN", accessToken);
-		// 将菜单对象转换成json字符串
-		String jsonMenu = json.toString();
+		String url = URL_MENU_CREATE.replace("ACCESS_TOKEN", accessToken);		
 		// 调用接口创建菜单
-		String response = HttpClientUtil.doHttpsPost(url, null, "UTF-8");
-		JSONObject jsonObject=JSONObject.fromObject(response);
+		JSONObject response = HttpClientUtil.doHttpsPost(url, "POST", json.toString());
 
-		// if (null != jsonObject) {
-		// if (0 != jsonObject.getInt("errcode")) {
-		// result = jsonObject.getInt("errcode");
-		// logger.error("创建菜单失败 errcode:{} errmsg:{}",
-		// jsonObject.getInt("errcode"), jsonObject.getString("errmsg"));
-		// }
-		// }
-		//
-		// return result;
-		if(null==jsonObject){
+		if (null == response) {
 			ErrorMsg errMsg = new ErrorMsg();
 			errMsg.setErrcode("-1");
 			errMsg.setErrmsg("server is busy");
-			
+
 			return JSONObject.fromObject(errMsg);
 		}
-		return jsonObject;
+		return response;
+	}
+
+	/**
+	 * 
+	 * @param accessToken
+	 * @return
+	 */
+	public JSONObject get(String accessToken) {
+		String url = URL_MENU_GET.replace("ACCESS_TOKEN", accessToken);
+		JSONObject response = HttpClientUtil.doHttpsPost(url, "GET", null);
+
+		if (null == response) {
+			ErrorMsg errMsg = new ErrorMsg();
+			errMsg.setErrcode("-1");
+			errMsg.setErrmsg("server is busy");
+
+			return JSONObject.fromObject(errMsg);
+		}
+		return response;
+	}
+
+	/**
+	 * 
+	 * @param accessToken
+	 * @return
+	 */
+	public JSONObject delete(String accessToken) {
+		String url = URL_MENU_DELETE.replace("ACCESS_TOKEN", accessToken);
+		JSONObject response = HttpClientUtil.doHttpsPost(url, "GET", null);
+
+		if (null == response) {
+			ErrorMsg errMsg = new ErrorMsg();
+			errMsg.setErrcode("-1");
+			errMsg.setErrmsg("server is busy");
+
+			return JSONObject.fromObject(errMsg);
+		}
+		return response;
+	}
+
+	/**
+	 * 处理微信发来的请求
+	 * 
+	 * @param request
+	 * @return xml
+	 */
+	public String processRequest(HttpServletRequest request) {
+		// xml格式的消息数据
+		String respXml = null;
+		try {
+			// 调用parseXml方法解析请求消息
+			Map<String, String> requestMap = messageService.parseXml(request);
+			// 发送方帐号
+			String fromUserName = requestMap.get("FromUserName");
+			// 开发者微信号
+			String toUserName = requestMap.get("ToUserName");
+			// 消息类型
+			String msgType = requestMap.get("MsgType");
+
+			TextMessage textMessage = new TextMessage();
+			textMessage.setToUserName(fromUserName);
+			textMessage.setFromUserName(toUserName);
+			textMessage.setCreateTime(new Date().getTime());
+			textMessage.setMsgType(MessageService.RESP_MESSAGE_TYPE_TEXT);
+			// 事件推送
+			if (msgType.equals(MessageService.REQ_MESSAGE_TYPE_EVENT)) {
+				// 事件类型
+				String eventType = requestMap.get("Event");
+				// 订阅
+				if (eventType.equals(MessageService.EVENT_TYPE_SUBSCRIBE)) {
+					textMessage.setContent("您好，欢迎关注米兰美甲艺社！体验生活，从这里开始！");
+					// 将消息对象转换成xml
+					respXml = messageService.messageToXml(textMessage);
+				}
+				// 取消订阅
+				else if (eventType.equals(MessageService.EVENT_TYPE_UNSUBSCRIBE)) {
+					// TODO 暂不做处理
+				}
+				// 自定义菜单点击事件
+				else if (eventType.equals(MessageService.EVENT_TYPE_CLICK)) {
+					// 事件KEY值，与创建菜单时的key值对应
+					String eventKey = requestMap.get("EventKey");
+					// 根据key值判断用户点击的按钮
+					if (eventKey.equals(MenuService.V1001_LOTTERY)) {
+						Article article = new Article();
+						article.setTitle("开源中国");
+						article.setDescription("开源中国社区成立于2008年8月，是目前中国最大的开源技术社区。\n\n开源中国的目的是为中国的IT技术人员提供一个全面的、快捷更新的用来检索开源软件以及交流开源经验的平台。\n\n经过不断的改进,目前开源中国社区已经形成了由开源软件库、代码分享、资讯、讨论区和博客等几大频道内容。");
+						article.setPicUrl("");
+						article.setUrl("http://m.oschina.net");
+						List<Article> articleList = new ArrayList<Article>();
+						articleList.add(article);
+						// 创建图文消息
+						NewsMessage newsMessage = new NewsMessage();
+						newsMessage.setToUserName(fromUserName);
+						newsMessage.setFromUserName(toUserName);
+						newsMessage.setCreateTime(new Date().getTime());
+						newsMessage.setMsgType(MessageService.RESP_MESSAGE_TYPE_NEWS);
+						newsMessage.setArticleCount(articleList.size());
+						newsMessage.setArticles(articleList);
+						respXml = messageService.messageToXml(newsMessage);
+					} else if (eventKey.equals(MenuService.V1002_VOUVHER)) {
+						textMessage.setContent("ITeye即创办于2003年9月的JavaEye,从最初的以讨论Java技术为主的技术论坛，已经逐渐发展成为涵盖整个软件开发领域的综合性网站。\n\nhttp://www.iteye.com");
+						respXml = messageService.messageToXml(textMessage);
+					} else {
+						textMessage.setContent("功能尚未开放，敬请期待！"+ eventKey);
+						respXml = messageService.messageToXml(textMessage);
+					}
+				}
+			}
+			// 当用户发消息时
+			else {
+				textMessage.setContent("请通过菜单使用网址导航服务！");
+				respXml = messageService.messageToXml(textMessage);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return respXml;
 	}
 }

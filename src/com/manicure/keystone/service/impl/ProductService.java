@@ -33,18 +33,19 @@ public class ProductService extends BaseService implements IProductService {
 	 */
 	public JSONObject getProductList(String accessToken, int status) {
 		String url = URL_PROGUCT_GET_LIST.replace("ACCESS_TOKEN", accessToken);
-		ProductListReq productListReq = new ProductListReq();
-		productListReq.setStatus(status);
-		String response = HttpClientUtil.doHttpsPost(url, null, "UTF-8");
-		JSONObject jsonObject=JSONObject.fromObject(response);
-		
-		if (null == jsonObject) {
+
+		ProductListReq request = new ProductListReq();
+		request.setStatus(status);
+
+		JSONObject response = HttpClientUtil.doHttpsPost(url, "POST", JSONObject.fromObject(request).toString());
+
+		if (null == response) {
 			ErrorMsg errMsg = new ErrorMsg();
 			errMsg.setErrcode("-1");
 			errMsg.setErrmsg("server is busy");
 
 			return JSONObject.fromObject(errMsg);
 		}
-		return jsonObject;
+		return response;
 	}
 }

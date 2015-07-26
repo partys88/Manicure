@@ -6,8 +6,6 @@ package com.manicure.keystone.entity.response;
 import java.util.List;
 
 /**
- * 文本消息
- * 
  * @author Barrie
  *
  */

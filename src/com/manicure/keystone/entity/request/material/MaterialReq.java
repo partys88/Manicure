@@ -3,11 +3,13 @@
  */
 package com.manicure.keystone.entity.request.material;
 
+import com.manicure.base.entity.BaseEntity;
+
 /**
  * @author Barrie
  *
  */
-public class MaterialReq {
+public class MaterialReq extends BaseEntity{
 	private String media_id;
 
 	/**

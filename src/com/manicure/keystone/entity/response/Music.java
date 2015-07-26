@@ -6,13 +6,11 @@ package com.manicure.keystone.entity.response;
 import com.manicure.base.entity.BaseEntity;
 
 /**
- * 音乐model
- * 
  * @author Barrie
  *
  */
-public class Music extends BaseEntity {
-	// 音乐名称
+public class Music extends BaseEntity{
+	// 音乐标题
 	private String Title;
 	// 音乐描述
 	private String Description;
@@ -20,6 +18,8 @@ public class Music extends BaseEntity {
 	private String MusicUrl;
 	// 高质量音乐链接，WIFI环境优先使用该链接播放音乐
 	private String HQMusicUrl;
+	// 缩略图的媒体id，通过上传多媒体文件得到的id
+	private String ThumbMediaId;
 
 	/**
 	 * @return the title
@@ -81,4 +81,18 @@ public class Music extends BaseEntity {
 		HQMusicUrl = hQMusicUrl;
 	}
 
+	/**
+	 * @return the thumbMediaId
+	 */
+	public String getThumbMediaId() {
+		return ThumbMediaId;
+	}
+
+	/**
+	 * @param thumbMediaId
+	 *            the thumbMediaId to set
+	 */
+	public void setThumbMediaId(String thumbMediaId) {
+		ThumbMediaId = thumbMediaId;
+	}
 }

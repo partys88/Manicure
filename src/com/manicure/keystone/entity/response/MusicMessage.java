@@ -4,13 +4,11 @@
 package com.manicure.keystone.entity.response;
 
 /**
- * 音乐消息
- * 
  * @author Barrie
  *
  */
 public class MusicMessage extends BaseMessage {
-	// 音乐
+
 	private Music Music;
 
 	/**

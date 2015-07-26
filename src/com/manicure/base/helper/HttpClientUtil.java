@@ -30,6 +30,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
@@ -40,85 +41,51 @@ import org.apache.http.util.EntityUtils;
  */
 public class HttpClientUtil {
 	public static String doPost(String url, Map<String, String> params, String charset) {
-		try {  
-	        HttpPost httpPost = new HttpPost(url);  
-	        HttpClient client = new DefaultHttpClient();  
-	        List<NameValuePair> valuePairs = new ArrayList<NameValuePair>(params.size());  
-	        for(Map.Entry<String, String> entry : params.entrySet()){  
-	            NameValuePair nameValuePair = new BasicNameValuePair(entry.getKey(), String.valueOf(entry.getValue()));  
-	            valuePairs.add(nameValuePair);  
-	        }  
-	        UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(valuePairs, charset);  
-	        httpPost.setEntity(formEntity);  
-	        HttpResponse resp = client.execute(httpPost);  
-	          
-	        HttpEntity entity = resp.getEntity();  
-	        String respContent = EntityUtils.toString(entity , charset).trim();  
-	        httpPost.abort();  
-	        client.getConnectionManager().shutdown();  
-	  
-	        return respContent;  
-	          
-	    } catch (Exception e) {  
-	        e.printStackTrace();  
-	        return null;  
-	    }  
-	}  
+		try {
+			HttpPost httpPost = new HttpPost(url);
+			HttpClient client = new DefaultHttpClient();
+			List<NameValuePair> valuePairs = new ArrayList<NameValuePair>(params.size());
+			for (Map.Entry<String, String> entry : params.entrySet()) {
+				NameValuePair nameValuePair = new BasicNameValuePair(entry.getKey(), String.valueOf(entry.getValue()));
+				valuePairs.add(nameValuePair);
+			}
+			UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(valuePairs, charset);
+			httpPost.setEntity(formEntity);
+			HttpResponse resp = client.execute(httpPost);
 
+			HttpEntity entity = resp.getEntity();
+			String respContent = EntityUtils.toString(entity, charset).trim();
+			httpPost.abort();
+			client.getConnectionManager().shutdown();
+
+			return respContent;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 	public static String doGet(String url, String param, String charset) {
-		try {  
-            HttpGet httpGet = new HttpGet(url);  
-            HttpClient client = new DefaultHttpClient();  
-            HttpResponse resp = client.execute(httpGet);  
-              
-            HttpEntity entity = resp.getEntity();  
-            String respContent = EntityUtils.toString(entity , charset).trim();  
-            httpGet.abort();  
-            client.getConnectionManager().shutdown();  
-  
-            return respContent;  
-              
-        } catch (Exception e) {  
-            e.printStackTrace();  
-            return null;  
-        }  
-	}
-
-	public static String doHttpsPost(String url, Map<String, String> map, String charset) {
-		HttpClient httpClient = null;
-		HttpPost httpPost = null;
-		String result = null;
 		try {
-			httpClient = new SSLClient();
-			httpPost = new HttpPost(url);
-			// 设置参数
-			List<NameValuePair> list = new ArrayList<NameValuePair>();
-			if (null != map) {
-				Iterator iterator = map.entrySet().iterator();
-				while (iterator.hasNext()) {
-					Entry<String, String> elem = (Entry<String, String>) iterator.next();
-					list.add(new BasicNameValuePair(elem.getKey(), elem.getValue()));
-				}
-			}
-			if (list.size() > 0) {
-				UrlEncodedFormEntity entity = new UrlEncodedFormEntity(list, charset);
-				httpPost.setEntity(entity);
-			}
-			HttpResponse response = httpClient.execute(httpPost);
-			if (response != null) {
-				HttpEntity resEntity = response.getEntity();
-				if (resEntity != null) {
-					result = EntityUtils.toString(resEntity, charset);
-				}
-			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
+			HttpGet httpGet = new HttpGet(url);
+			HttpClient client = new DefaultHttpClient();
+			HttpResponse resp = client.execute(httpGet);
+
+			HttpEntity entity = resp.getEntity();
+			String respContent = EntityUtils.toString(entity, charset).trim();
+			httpGet.abort();
+			client.getConnectionManager().shutdown();
+
+			return respContent;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
 		}
-		return result;
 	}
 
-	public static JSONObject httpsRequest(String requestUrl, String requestMethod, String outputStr) {
+	public static JSONObject doHttpsPost(String requestUrl, String requestMethod, String outputStr) {
 		JSONObject jsonObject = null;
 		try {
 			// 创建SSLContext对象，并使用我们指定的信任管理器初始化
@@ -131,7 +98,7 @@ public class HttpClientUtil {
 			URL url = new URL(requestUrl);
 			HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
 			conn.setSSLSocketFactory(ssf);
-			
+
 			conn.setDoOutput(true);
 			conn.setDoInput(true);
 			conn.setUseCaches(false);
@@ -164,9 +131,9 @@ public class HttpClientUtil {
 			conn.disconnect();
 			jsonObject = JSONObject.fromObject(buffer.toString());
 		} catch (ConnectException ce) {
-			//logger.error("连接超时：{}", ce);
+			// logger.error("连接超时：{}", ce);
 		} catch (Exception e) {
-			//logger.error("https请求异常：{}", e);
+			// logger.error("https请求异常：{}", e);
 		}
 		return jsonObject;
 	}
@@ -180,10 +147,6 @@ public class HttpClientUtil {
 		createMap.put("authpass", "*****");
 		createMap.put("orgkey", "****");
 		createMap.put("orgname", "****");
-		String httpOrgCreateTestRtn = HttpClientUtil.doHttpsPost(url, null, charset);
-		System.out.println("result:" + httpOrgCreateTestRtn);
-		
-		JSONObject jsonObject = HttpClientUtil.httpsRequest(url, "POST", null);
-		System.out.println("result:" + jsonObject);
+
 	}
 }

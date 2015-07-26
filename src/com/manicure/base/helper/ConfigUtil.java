@@ -16,32 +16,26 @@ import net.sf.json.JSONObject;
  *
  */
 public class ConfigUtil {
-	public static JSONObject getJson(String fileName) throws IOException {
-		String path = Thread.currentThread().getContextClassLoader()
-				.getResource("/").getPath();
-		path = "/" + path.substring(1, path.indexOf("classes")) + "conf/"
-				+ fileName;
+	public static String getJson(String fileName) throws IOException {
+		String path = Thread.currentThread().getContextClassLoader().getResource("/").getPath();
+		path = "/" + path.substring(1, path.indexOf("classes")) + "conf/" + fileName;
 		FileInputStream fileInputStream = new FileInputStream(path);
-		InputStreamReader inputStreamReader = new InputStreamReader(
-				fileInputStream, "UTF-8");
+		InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, "UTF-8");
 		BufferedReader reader = new BufferedReader(inputStreamReader);
 		String tempString = null;
 		String laststr = "";
 		while ((tempString = reader.readLine()) != null) {
 			laststr += tempString;
 		}
-		JSONObject json = JSONObject.fromObject(laststr);
-		return json;
+		return laststr;
 	}
 
 	public static String getProperty(String fileName, String name) {
 		Properties p = new Properties();
 		String result = "";
 		try {
-			String path = Thread.currentThread().getContextClassLoader()
-					.getResource("/").getPath();
-			path = "/" + path.substring(1, path.indexOf("classes")) + "conf/"
-					+ fileName;
+			String path = Thread.currentThread().getContextClassLoader().getResource("/").getPath();
+			path = "/" + path.substring(1, path.indexOf("classes")) + "conf/" + fileName;
 			p.load(new FileInputStream(path));
 			result = p.getProperty(name);
 		} catch (Exception e) {

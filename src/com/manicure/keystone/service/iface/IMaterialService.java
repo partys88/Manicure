@@ -11,4 +11,6 @@ import net.sf.json.JSONObject;
  */
 public interface IMaterialService {
 	public JSONObject getMaterialList(String accessToken);
+
+	public JSONObject getMaterial(String accessToken, String mediaId);
 }

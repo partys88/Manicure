@@ -3,11 +3,13 @@
  */
 package com.manicure.keystone.entity.request.material;
 
+import com.manicure.base.entity.BaseEntity;
+
 /**
  * @author Barrie
  *
  */
-public class MaterialListReq {
+public class MaterialListReq extends BaseEntity{
 	public static String TYPE_IMAGE = "image";
 	public static String TYPE_VIDEO = "video";
 	public static String TYPE_VOICE = "voice";

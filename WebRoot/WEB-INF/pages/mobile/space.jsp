@@ -27,7 +27,9 @@
 				</div>
 				<div class="ui-block-b">
 					<p><%=u.getNickname()%></p>
-					<p style="font-size: 10px;font-weight: normal;"><%=u.getSex()%> <%=u.getCountry()%> <%=u.getProvince()%> <%=u.getCity()%></p>
+					<p style="font-size: 10px;font-weight: normal;"><%=u.getCountry()%>
+						<%=u.getProvince()%>
+						<%=u.getCity()%></p>
 				</div>
 			</div>
 			<ul data-role="listview" style="margin-top: 10px;">

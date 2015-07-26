@@ -27,6 +27,8 @@ public class MaterialService extends BaseService implements IMaterialService {
 	ICoreService coreService;
 
 	/**
+	 * @throws IllegalAccessException
+	 * @throws IllegalArgumentException
 	 * 
 	 */
 	public JSONObject getMaterialList(String accessToken) {
@@ -34,21 +36,20 @@ public class MaterialService extends BaseService implements IMaterialService {
 		String url = URL_MATERIAL_GET_LIST.replace("ACCESS_TOKEN", accessToken);
 
 		MaterialListReq request = new MaterialListReq();
-
 		request.setType(MaterialListReq.TYPE_NEWS);
-		request.setOffset(0);
 		request.setCount(20);
-		String response = HttpClientUtil.doHttpsPost(url, null, "UTF-8");
-		JSONObject jsonObject=JSONObject.fromObject(response);
-		
-		if(null==jsonObject){
+		request.setOffset(0);
+
+		JSONObject response = HttpClientUtil.doHttpsPost(url, "POST", JSONObject.fromObject(request).toString());
+
+		if (null == response) {
 			ErrorMsg errMsg = new ErrorMsg();
 			errMsg.setErrcode("-1");
 			errMsg.setErrmsg("server is busy");
-			
+
 			return JSONObject.fromObject(errMsg);
 		}
-		return jsonObject;
+		return response;
 	}
 
 	/**
@@ -56,25 +57,25 @@ public class MaterialService extends BaseService implements IMaterialService {
 	 * @param accessToken
 	 * @param mediaId
 	 * @return
+	 * @throws IllegalAccessException
+	 * @throws IllegalArgumentException
 	 */
 	public JSONObject getMaterial(String accessToken, String mediaId) {
 
 		String url = URL_MATERIAL_GET_DETAIL.replace("ACCESS_TOKEN", accessToken);
 
 		MaterialReq request = new MaterialReq();
-
 		request.setMedia_id(mediaId);
-
-		String response = HttpClientUtil.doHttpsPost(url, null, "UTF-8");
-		JSONObject jsonObject=JSONObject.fromObject(response);
 		
-		if(null==jsonObject){
+		JSONObject response = HttpClientUtil.doHttpsPost(url, "POST", JSONObject.fromObject(request).toString());
+
+		if (null == response) {
 			ErrorMsg errMsg = new ErrorMsg();
 			errMsg.setErrcode("-1");
 			errMsg.setErrmsg("server is busy");
-			
+
 			return JSONObject.fromObject(errMsg);
 		}
-		return jsonObject;
+		return response;
 	}
 }

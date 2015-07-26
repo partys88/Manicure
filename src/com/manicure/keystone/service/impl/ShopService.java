@@ -3,6 +3,9 @@
  */
 package com.manicure.keystone.service.impl;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import net.sf.json.JSONObject;
@@ -31,20 +34,20 @@ public class ShopService extends BaseService implements IShopService {
 	 */
 	public JSONObject getShopList(String accessToken, int begin, int limit) {
 		String url = URL_SHOP_GET_LIST.replace("TOKEN", accessToken);
-		ShopListReq shopListReq = new ShopListReq();
-		shopListReq.setBegin(begin);
-		shopListReq.setLimit(limit);
-		String response = HttpClientUtil.doHttpsPost(url, null, "UTF-8");
-		JSONObject jsonObject=JSONObject.fromObject(response);
-		
-		if (null == jsonObject) {
+		ShopListReq request = new ShopListReq();
+		request.setBegin(begin);
+		request.setLimit(limit);
+
+		JSONObject response = HttpClientUtil.doHttpsPost(url, "POST", JSONObject.fromObject(request).toString());
+
+		if (null == response) {
 			ErrorMsg errMsg = new ErrorMsg();
 			errMsg.setErrcode("-1");
 			errMsg.setErrmsg("server is busy");
 
 			return JSONObject.fromObject(errMsg);
 		}
-		return jsonObject;
+		return response;
 	}
 
 	/**
@@ -52,20 +55,20 @@ public class ShopService extends BaseService implements IShopService {
 	 */
 	public JSONObject getShop(String accessToken, String poi_id) {
 		String url = URL_SHOP_GET_DETAIL.replace("TOKEN", accessToken);
-		ShopReq shopReq = new ShopReq();
-		shopReq.setPoi_id(poi_id);
 
-		String response = HttpClientUtil.doHttpsPost(url, null, "UTF-8");
-		JSONObject jsonObject=JSONObject.fromObject(response);
-		
-		if (null == jsonObject) {
+		ShopReq request = new ShopReq();
+		request.setPoi_id(poi_id);
+
+		JSONObject response = HttpClientUtil.doHttpsPost(url, "POST", JSONObject.fromObject(request).toString());
+
+		if (null == response) {
 			ErrorMsg errMsg = new ErrorMsg();
 			errMsg.setErrcode("-1");
 			errMsg.setErrmsg("server is busy");
 
 			return JSONObject.fromObject(errMsg);
 		}
-		return jsonObject;
+		return response;
 	}
 
 }
