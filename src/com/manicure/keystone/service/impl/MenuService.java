@@ -11,6 +11,7 @@ import net.sf.json.JSONObject;
 
 import org.springframework.stereotype.Service;
 
+import com.manicure.base.helper.HttpClientUtil;
 import com.manicure.base.service.BaseService;
 import com.manicure.keystone.entity.error.ErrorMsg;
 import com.manicure.keystone.service.iface.ICoreService;
@@ -43,7 +44,8 @@ public class MenuService extends BaseService {
 		// 将菜单对象转换成json字符串
 		String jsonMenu = json.toString();
 		// 调用接口创建菜单
-		JSONObject jsonObject = coreService.httpsRequest(url, "POST", jsonMenu);
+		String response = HttpClientUtil.doHttpsPost(url, null, "UTF-8");
+		JSONObject jsonObject=JSONObject.fromObject(response);
 
 		// if (null != jsonObject) {
 		// if (0 != jsonObject.getInt("errcode")) {

@@ -6,7 +6,7 @@ import com.manicure.product.entity.Service;
 import com.manicure.product.entity.ServiceComment;
 import com.manicure.product.entity.ServiceCommentExample;
 
-public interface IProductService {
+public interface IProductService1 {
 	
 	public List<Service> getServiceByType(String type);
 	

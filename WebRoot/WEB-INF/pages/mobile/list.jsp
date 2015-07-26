@@ -6,9 +6,10 @@
 <base href="<%=basePath%>">
 <title>Home</title>
 <%@ include file="meta/meta.jsp"%>
+<link rel="stylesheet" href="${ctx}/css/listview-grid.css">
 </head>
 <body>
-	<div data-role="page" class="list-page">
+	<div data-role="page" id="list-page">
 		<div data-role="header">
 			<a data-rel="back" class="ui-btn ui-btn-left ui-alt-icon ui-nodisc-icon ui-corner-all ui-btn-icon-notext ui-icon-carat-l">后退</a>
 			<h2>米宝服务</h2>
@@ -19,10 +20,10 @@
 					<a href="#" data-theme="b" data-role="button">美甲</a>
 				</div>
 				<div class="ui-block-b typebtn">
-					<a href="#" data-theme="c" data-role="button" >美足</a>
+					<a href="#" data-theme="c" data-role="button">美足</a>
 				</div>
 				<div class="ui-block-c typebtn">
-					<a href="#" data-theme="d" data-role="button" >美婕</a>
+					<a href="#" data-theme="d" data-role="button">美睫</a>
 				</div>
 			</div>
 			<div class="ui-grid-a" style="font-size: 0.8em;text-align: center;">
@@ -30,7 +31,7 @@
 					<a data-theme="e" data-role="button">化妆</a>
 				</div>
 				<div class="ui-block-b typebtn">
-					<a data-theme="f" data-role="button" >护理</a>
+					<a data-theme="f" data-role="button">护理</a>
 				</div>
 			</div>
 			<div class="ui-bar ui-bar-b" style="padding: 5px;">
@@ -68,48 +69,17 @@
 						for="radio-choice-h-2c">法式</label> <input type="radio" name="radio-choice-h-2" id="radio-choice-h-2d" value="other"> <label for="radio-choice-h-2d">日韩</label>
 				</fieldset>
 			</form>
+			
+
 			<div class="ui-grid-solo">
-				<ul data-role="listview" data-inset="true" >
-					<li><a href="#" > <img src="${ctx}/_assets/img/apple.png" class="ui-li-thumb">
-							<h2>iOS 6.1</h2>
-							<p>Apple released iOS 6.1</p>
-							<p class="ui-li-aside">iOS</p>
+				<ul data-role="listview" data-inset="true" id="page-list-list-service">
+					<!-- 
+					<li><a href="#"> <img src="" class="ui-li-thumb">
+							<h2>Demo</h2>
+							<p>Demo</p>
+							<p class="ui-li-aside">Demo</p>
 					</a></li>
-					<li><a href="#" > <img src="${ctx}/_assets/img/blackberry_10.png" class="ui-li-thumb">
-							<h2>BlackBerry 10</h2>
-							<p>BlackBerry launched the Z10 and Q10 with the new BB10 OS</p>
-							<p class="ui-li-aside">BB</p>
-					</a></li>
-					<li><a href="#"> <img src="${ctx}/_assets/img/lumia_800.png" class="ui-li-thumb">
-							<h2>WP 7.8</h2>
-							<p>Nokia rolls out WP 7.8 to Lumia 800</p>
-							<p class="ui-li-aside">WP</p>
-					</a></li>
-					<li><a href="#"> <img src="${ctx}/_assets/img/galaxy_express.png" class="ui-li-thumb">
-							<h2>Galaxy</h2>
-							<p>New Samsung Galaxy Express</p>
-							<p class="ui-li-aside">Samsung</p>
-					</a></li>
-					<li><a href="#"> <img src="${ctx}/_assets/img/nexus_7.png" class="ui-li-thumb">
-							<h2>Nexus 7</h2>
-							<p>Rumours about new full HD Nexus 7</p>
-							<p class="ui-li-aside">Android</p>
-					</a></li>
-					<li><a href="#"> <img src="${ctx}/_assets/img/firefox_os.png" class="ui-li-thumb">
-							<h2>Firefox OS</h2>
-							<p>ZTE to launch Firefox OS smartphone at MWC</p>
-							<p class="ui-li-aside">Firefox</p>
-					</a></li>
-					<li><a href="#"> <img src="${ctx}/_assets/img/tizen.png" class="ui-li-thumb">
-							<h2>Tizen</h2>
-							<p>First Samsung phones with Tizen can be expected in 2013</p>
-							<p class="ui-li-aside">Tizen</p>
-					</a></li>
-					<li><a href="#">
-							<h2>Symbian</h2>
-							<p>Nokia confirms the end of Symbian</p>
-							<p class="ui-li-aside">Symbian</p>
-					</a></li>
+					 -->
 				</ul>
 
 			</div>

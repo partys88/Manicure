@@ -57,7 +57,7 @@
 					<a href="${ctx}/list" data-theme="c" data-prefetch="true" data-role="button" data-icon="cloud" data-iconpos="top">美足</a>
 				</div>
 				<div class="ui-block-c">
-					<a href="${ctx}/list" data-theme="d" data-prefetch="true" data-role="button" data-icon="clock" data-iconpos="top">美婕</a>
+					<a href="${ctx}/list" data-theme="d" data-prefetch="true" data-role="button" data-icon="clock" data-iconpos="top">美睫</a>
 				</div>
 			</div>
 			<div class="ui-grid-a" style="font-size: 0.8em;text-align: center;">
@@ -68,15 +68,15 @@
 					<a href="${ctx}/list" data-theme="f" data-prefetch="true" data-role="button" data-icon="eye" data-iconpos="top">护理</a>
 				</div>
 			</div>
-			<div class="ui-grid-solo" style="margin-top: 10px;">
-				<ul data-role="listview" data-inset="true">
+			<div class="ui-grid-solo" style="margin-top: 10px;margin-bottom: 10px;">
+				<ul data-role="listview" >
 					<li><a> <img src="${ctx}/_assets/img/apple.png" class="ui-li-thumb">
 							<h2>低价热卖</h2>
 							<p>最新的低价商品</p>
 
 					</a></li>
 					<li><a> <img src="${ctx}/_assets/img/blackberry_10.png" class="ui-li-thumb">
-							<h2>三号学员</h2>
+							<h2>三好学员</h2>
 							<p>本店的优秀学员展示</p>
 
 					</a></li>

@@ -16,14 +16,9 @@ import net.sf.json.JSONObject;
  *
  */
 public interface ICoreService {
-	public void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException;
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
 
-	public void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException;
-
-	public JSONObject httpsRequest(String requestUrl, String requestMethod,
-			String outputStr);
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
 
 	public JSONObject getAccessToken(String appid, String appsecret);
 }

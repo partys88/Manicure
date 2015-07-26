@@ -9,6 +9,7 @@ import net.sf.json.JSONObject;
 
 import org.springframework.stereotype.Service;
 
+import com.manicure.base.helper.HttpClientUtil;
 import com.manicure.base.service.BaseService;
 import com.manicure.keystone.entity.error.ErrorMsg;
 import com.manicure.keystone.service.iface.ICoreService;
@@ -36,7 +37,8 @@ public class UserService extends BaseService implements IUserService {
 		// 拼装创建菜单的url
 		String url = URL_SNS_OAUTH2_GET_TOKEN.replace("APPID", appId).replace("SECRET", appSecret).replace("CODE", code);
 		// 获取网页授权凭证
-		JSONObject jsonObject = coreService.httpsRequest(url, "GET", null);
+		String response = HttpClientUtil.doHttpsPost(url, null, "UTF-8");
+		JSONObject jsonObject = JSONObject.fromObject(response);
 		// if (null != jsonObject) {
 		// try {
 		// wat = new WeChatOauth2Token();
@@ -75,7 +77,8 @@ public class UserService extends BaseService implements IUserService {
 		// 拼装创建菜单的url
 		String url = URL_SNS_OAUTH2_REFRESH_TOKEN.replace("APPID", appId).replace("REFRESH_TOKEN", refreshToken);
 		// 刷新网页授权凭证
-		JSONObject jsonObject = coreService.httpsRequest(url, "GET", null);
+		String response = HttpClientUtil.doHttpsPost(url, null, "UTF-8");
+		JSONObject jsonObject = JSONObject.fromObject(response);
 		// if (null != jsonObject) {
 		// try {
 		// wat = new WeChatOauth2Token();
@@ -117,7 +120,8 @@ public class UserService extends BaseService implements IUserService {
 		// 拼装创建菜单的url
 		String url = URL_USER_GET_SNS_INFO.replace("ACCESS_TOKEN", accessToken).replace("OPENID", openId);
 		// 通过网页授权获取用户信息
-		JSONObject jsonObject = coreService.httpsRequest(url, "GET", null);
+		String response = HttpClientUtil.doHttpsPost(url, null, "UTF-8");
+		JSONObject jsonObject = JSONObject.fromObject(response);
 
 		// if (null != jsonObject) {
 		// try {
@@ -171,7 +175,9 @@ public class UserService extends BaseService implements IUserService {
 		// 拼装创建菜单的url
 		String url = URL_USER_GET_INFO.replace("ACCESS_TOKEN", accessToken).replace("OPENID", openId);
 		// 获取用户信息
-		JSONObject jsonObject = coreService.httpsRequest(url, "GET", null);
+		String response = HttpClientUtil.doHttpsPost(url, null, "UTF-8");
+		logger.info(response);
+		JSONObject jsonObject = JSONObject.fromObject(response);
 
 		// if (null != jsonObject) {
 		// try {
@@ -231,7 +237,8 @@ public class UserService extends BaseService implements IUserService {
 		// 拼装创建菜单的url
 		String url = URL_USER_GET_LIST.replace("ACCESS_TOKEN", accessToken).replace("NEXT_OPENID", nextOpenId);
 		// 获取关注者列表
-		JSONObject jsonObject = coreService.httpsRequest(url, "GET", null);
+		String response = HttpClientUtil.doHttpsPost(url, null, "UTF-8");
+		JSONObject jsonObject = JSONObject.fromObject(response);
 		// // 如果请求成功
 		// if (null != jsonObject &&
 		// !"0".equals(jsonObject.get("count").toString())) {

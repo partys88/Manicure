@@ -42,6 +42,17 @@ public class BaseService {
 	
 	protected final String URL_SHOP_GET_DETAIL = ConfigUtil.getProperty(propertiesFile, "url.shop.get.detail");
 	
+	protected final String URL_PROGUCT_GET_LIST = ConfigUtil.getProperty(propertiesFile, "url.product.get.list");
+	
+	protected final String URL_PROGUCT_GET_DETAIL = ConfigUtil.getProperty(propertiesFile, "url.product.get.detail");
+	
+	protected final String URL_PROGUCT_GROUP_GET_LIST = ConfigUtil.getProperty(propertiesFile, "url.product.group.get.list");
+	
+	protected final String URL_PROGUCT_GROUP_GET_DETAIL = ConfigUtil.getProperty(propertiesFile, "url.product.group.get.detail");
+	
+	protected final String URL_ORDER_GET_LIST = ConfigUtil.getProperty(propertiesFile, "url.order.get.list");
+	
+	protected final String URL_ORDER_GET_DETAIL = ConfigUtil.getProperty(propertiesFile, "url.order.get.detail");
 	
 	// logger
 	protected Logger logger = LoggerFactory.getLogger(getClass());

@@ -67,11 +67,13 @@ public class UserController extends BaseController {
 	 * @param response
 	 * @return
 	 */
-	@RequestMapping(value = "/user/sns/oauth")
+	@RequestMapping(value = "/user/sns/oauth", produces = "application/json; charset=utf-8")
 	@ResponseBody
 	public String SNSUserOAuth(HttpServletRequest request, HttpServletResponse response) {
+
 		// 用户同意授权后，能获取到code
 		String code = request.getParameter("code");
+		logger.info(code);
 		// 用户同意授权
 		if (!"authdeny".equals(code) && null != code) {
 			// 获取网页授权access_token
@@ -83,7 +85,7 @@ public class UserController extends BaseController {
 			// 用户标识
 			String openId = sat.getString("openid");
 			if ("snsapi_userinfo".equals(sat.getString("scope"))) {
-				
+
 				// // 获取用户信息
 				// SNSUserInfo snsUserInfo =
 				// userService.getSNSUserInfo(accessToken, openId);
@@ -134,7 +136,7 @@ public class UserController extends BaseController {
 	 * @param openId
 	 * @return
 	 */
-	@RequestMapping(value = "/user/query/{openId}")
+	@RequestMapping(value = "/user/query/{openId}", produces = "application/json; charset=utf-8")
 	@ResponseBody
 	public String getWeChatUserInfo(HttpServletRequest request, HttpServletResponse response, @PathVariable String openId) {
 		// 调用接口获取access_token
@@ -158,6 +160,7 @@ public class UserController extends BaseController {
 			logger.error(resp.toString());
 			return resp.toString();
 		}
+		logger.info(resp.toString());
 		return resp.toString();
 
 	}

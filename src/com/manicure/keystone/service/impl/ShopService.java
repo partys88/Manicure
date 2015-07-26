@@ -9,6 +9,7 @@ import net.sf.json.JSONObject;
 
 import org.springframework.stereotype.Service;
 
+import com.manicure.base.helper.HttpClientUtil;
 import com.manicure.base.service.BaseService;
 import com.manicure.keystone.entity.error.ErrorMsg;
 import com.manicure.keystone.entity.request.shop.ShopListReq;
@@ -33,7 +34,9 @@ public class ShopService extends BaseService implements IShopService {
 		ShopListReq shopListReq = new ShopListReq();
 		shopListReq.setBegin(begin);
 		shopListReq.setLimit(limit);
-		JSONObject jsonObject = coreService.httpsRequest(url, "POST", JSONObject.fromObject(shopListReq).toString());
+		String response = HttpClientUtil.doHttpsPost(url, null, "UTF-8");
+		JSONObject jsonObject=JSONObject.fromObject(response);
+		
 		if (null == jsonObject) {
 			ErrorMsg errMsg = new ErrorMsg();
 			errMsg.setErrcode("-1");
@@ -51,8 +54,10 @@ public class ShopService extends BaseService implements IShopService {
 		String url = URL_SHOP_GET_DETAIL.replace("TOKEN", accessToken);
 		ShopReq shopReq = new ShopReq();
 		shopReq.setPoi_id(poi_id);
+
+		String response = HttpClientUtil.doHttpsPost(url, null, "UTF-8");
+		JSONObject jsonObject=JSONObject.fromObject(response);
 		
-		JSONObject jsonObject = coreService.httpsRequest(url, "POST", JSONObject.fromObject(shopReq).toString());
 		if (null == jsonObject) {
 			ErrorMsg errMsg = new ErrorMsg();
 			errMsg.setErrcode("-1");

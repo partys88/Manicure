@@ -12,10 +12,10 @@ import com.manicure.product.entity.ServiceComment;
 import com.manicure.product.entity.ServiceCommentExample;
 import com.manicure.product.entity.ServiceExample;
 import com.manicure.product.entity.ServiceTypeExample;
-import com.manicure.product.service.iface.IProductService;
+import com.manicure.product.service.iface.IProductService1;
 
 @org.springframework.stereotype.Service
-public class IProductServiceImpl implements IProductService {
+public class IProductServiceImpl implements IProductService1 {
 
 	@Autowired
 	private ITypeDaoImpl iTypeDaoImpl;

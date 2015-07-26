@@ -9,6 +9,7 @@ import net.sf.json.JSONObject;
 
 import org.springframework.stereotype.Service;
 
+import com.manicure.base.helper.HttpClientUtil;
 import com.manicure.base.service.BaseService;
 import com.manicure.keystone.entity.error.ErrorMsg;
 import com.manicure.keystone.entity.request.material.MaterialListReq;
@@ -37,7 +38,8 @@ public class MaterialService extends BaseService implements IMaterialService {
 		request.setType(MaterialListReq.TYPE_NEWS);
 		request.setOffset(0);
 		request.setCount(20);
-		JSONObject jsonObject = coreService.httpsRequest(url, "POST", JSONObject.fromObject(request).toString());
+		String response = HttpClientUtil.doHttpsPost(url, null, "UTF-8");
+		JSONObject jsonObject=JSONObject.fromObject(response);
 		
 		if(null==jsonObject){
 			ErrorMsg errMsg = new ErrorMsg();
@@ -63,8 +65,9 @@ public class MaterialService extends BaseService implements IMaterialService {
 
 		request.setMedia_id(mediaId);
 
-		JSONObject jsonObject = coreService.httpsRequest(url, "POST", JSONObject.fromObject(request).toString());
-
+		String response = HttpClientUtil.doHttpsPost(url, null, "UTF-8");
+		JSONObject jsonObject=JSONObject.fromObject(response);
+		
 		if(null==jsonObject){
 			ErrorMsg errMsg = new ErrorMsg();
 			errMsg.setErrcode("-1");
