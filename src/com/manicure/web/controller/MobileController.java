@@ -3,14 +3,9 @@
  */
 package com.manicure.web.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import net.sf.json.JSONObject;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -18,9 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.manicure.base.controller.BaseController;
-import com.manicure.base.helper.HttpClientUtil;
-import com.manicure.keystone.service.impl.CoreService;
-import com.manicure.keystone.service.impl.UserService;
+import com.manicure.web.service.impl.MobileService;
 
 /**
  * @author Barrie
@@ -30,70 +23,49 @@ import com.manicure.keystone.service.impl.UserService;
 @RequestMapping(value = "/mobile")
 public class MobileController extends BaseController {
 	@Resource
-	CoreService coreService;
-	@Resource
-	UserService userService;
+	MobileService mobileService;
 
 	@RequestMapping(value = "/home")
-	public String home() {
+	public String home(HttpServletRequest request, HttpServletResponse response) {
+		mobileService.setUser(request);
 		return "/mobile/home";
 	}
 
 	@RequestMapping(value = "/order")
-	public String order() {
+	public String order(HttpServletRequest request, HttpServletResponse response) {
+		mobileService.setUser(request);
 		return "/mobile/order";
 	}
 
 	@RequestMapping(value = "/service")
-	public String service() {
+	public String service(HttpServletRequest request, HttpServletResponse response) {
+		mobileService.setUser(request);
 		return "/mobile/service";
 	}
 
 	@RequestMapping(value = "/list")
-	public String list() {
+	public String list(HttpServletRequest request, HttpServletResponse response) {
+		mobileService.setUser(request);
 		return "/mobile/list";
 	}
 
 	@RequestMapping(value = "/space")
-	public String space() {
+	public String space(HttpServletRequest request, HttpServletResponse response) {
+		mobileService.setUser(request);
 		return "/mobile/space";
 	}
 
 	@RequestMapping(value = "/product/{productId}")
 	public String item(HttpServletRequest request, HttpServletResponse response, ModelMap model, @PathVariable String productId) {
 		model.addAttribute("pid", productId);
+		mobileService.setUser(request);
 		return "/mobile/product";
 	}
 
-	@RequestMapping(value = { "/", "/index" }, produces = "application/json; charset=utf-8")
+	@RequestMapping(value = { "/", "/index" })
 	public String index(HttpServletRequest request, HttpServletResponse response) {
-		String code = request.getParameter("code");
 
-		String path = request.getContextPath();
-		int port = request.getServerPort();
-		String basePath = null;
-		if (80 == port) {
-			basePath = request.getScheme() + "://" + request.getServerName() + path;
-		} else {
-			basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path;
-		}
-
-		String url = basePath + "/api/keystone/user/sns/oauth";
-		logger.info(url);
-		Map<String, String> params = new HashMap();
-		params.put("code", code);
-		
-		String resp = HttpClientUtil.doHttpPost(url, params, "UTF-8");
-
-		if (null == resp) {
-			logger.error("fail to post");
-		}
-		logger.info(resp);
-		// JSONObject userInfo = JSONObject.fromObject(resp);
-//		if (!userInfo.containsKey("errcode")) {
-//			logger.info(userInfo.toString());
-//
-//		}
+		mobileService.setUser(request);
 
 		return "/mobile/service";
 	}

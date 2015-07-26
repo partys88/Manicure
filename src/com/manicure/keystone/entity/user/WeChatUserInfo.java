@@ -13,11 +13,11 @@ import com.manicure.base.entity.BaseEntity;
  */
 public class WeChatUserInfo extends BaseEntity {
 	// 用户的标识
-	private String openId;
+	private String openid;
 	// 关注状态（1是关注，0是未关注），未关注时获取不到其余信息
 	private int subscribe;
 	// 用户关注时间，为时间戳。如果用户曾多次关注，则取最后关注时间
-	private String subscribeTime;
+	private String subscribe_time;
 	// 昵称
 	private String nickname;
 	// 用户的性别（1是男性，2是女性，0是未知）
@@ -31,21 +31,25 @@ public class WeChatUserInfo extends BaseEntity {
 	// 用户的语言，简体中文为zh_CN
 	private String language;
 	// 用户头像
-	private String headImgUrl;
+	private String headimgurl;
+
+	private String remark;
+
+	private String groupid;
 
 	/**
-	 * @return the openId
+	 * @return the openid
 	 */
-	public String getOpenId() {
-		return openId;
+	public String getOpenid() {
+		return openid;
 	}
 
 	/**
-	 * @param openId
-	 *            the openId to set
+	 * @param openid
+	 *            the openid to set
 	 */
-	public void setOpenId(String openId) {
-		this.openId = openId;
+	public void setOpenid(String openid) {
+		this.openid = openid;
 	}
 
 	/**
@@ -64,18 +68,18 @@ public class WeChatUserInfo extends BaseEntity {
 	}
 
 	/**
-	 * @return the subscribeTime
+	 * @return the subscribe_time
 	 */
-	public String getSubscribeTime() {
-		return subscribeTime;
+	public String getSubscribe_time() {
+		return subscribe_time;
 	}
 
 	/**
-	 * @param subscribeTime
-	 *            the subscribeTime to set
+	 * @param subscribe_time
+	 *            the subscribe_time to set
 	 */
-	public void setSubscribeTime(String subscribeTime) {
-		this.subscribeTime = subscribeTime;
+	public void setSubscribe_time(String subscribe_time) {
+		this.subscribe_time = subscribe_time;
 	}
 
 	/**
@@ -169,18 +173,48 @@ public class WeChatUserInfo extends BaseEntity {
 	}
 
 	/**
-	 * @return the headImgUrl
+	 * @return the headimgurl
 	 */
-	public String getHeadImgUrl() {
-		return headImgUrl;
+	public String getHeadimgurl() {
+		return headimgurl;
 	}
 
 	/**
-	 * @param headImgUrl
-	 *            the headImgUrl to set
+	 * @param headimgurl
+	 *            the headimgurl to set
 	 */
-	public void setHeadImgUrl(String headImgUrl) {
-		this.headImgUrl = headImgUrl;
+	public void setHeadimgurl(String headimgurl) {
+		this.headimgurl = headimgurl;
+	}
+
+	/**
+	 * @return the remark
+	 */
+	public String getRemark() {
+		return remark;
+	}
+
+	/**
+	 * @param remark
+	 *            the remark to set
+	 */
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
+	/**
+	 * @return the groupid
+	 */
+	public String getGroupid() {
+		return groupid;
+	}
+
+	/**
+	 * @param groupid
+	 *            the groupid to set
+	 */
+	public void setGroupid(String groupid) {
+		this.groupid = groupid;
 	}
 
 }

@@ -128,7 +128,6 @@ public class CoreService extends BaseService implements ICoreService {
 			errMsg.setErrmsg("server is busy");
 			return JSONObject.fromObject(errMsg);
 		}
-		logger.info(jsonObject.toString());
 		return jsonObject;
 	}
 

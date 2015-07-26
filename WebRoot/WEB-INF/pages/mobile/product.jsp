@@ -66,7 +66,7 @@
 				</ul>
 			</div>
 			<div class="ui-grid-solo" style="padding-left: 10px;padding-right: 10px;padding-bottom: 10px;">
-				<a href="${ctx}/home" class="ui-btn ui-btn-d ui-shadow ui-corner-all">预约</a>
+				<a href="http://mp.weixin.qq.com/bizmall/malldetail?id=&pid=pxgY4xM-HJWG-U3uCPm0j8oY6H84&biz=MzI5MjAwNjA4Ng==&scene=&action=show_detail&showwxpaytitle=1#wechat_redirect" class="ui-btn ui-btn-d ui-shadow ui-corner-all">预约</a>
 			</div>
 		</div>
 		<%@ include file="meta/footer.jsp"%>

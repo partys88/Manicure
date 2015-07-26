@@ -23,11 +23,11 @@
 		<div role="main">
 			<div class="ui-grid-a ui-bar ui-bar-b">
 				<div class="ui-block-a" style="text-align: center;">
-					<img height="100px" width="100px" src="http://wx.qlogo.cn/mmopen/ajNVdqHZLLDziaia89e1qnttJZh0TmMdCvKndaGvBYL3nyQZdh2ziaaUGpJfyuQTEXSJ3OlLJ8sB5jpuicWlag9ACA/0">
+					<img height="100px" width="100px" src="<%=u.getHeadimgurl()%>">
 				</div>
 				<div class="ui-block-b">
-					<p>用户名</p>
-					<p style="font-size: 10px;font-weight: normal;">男 中国 江苏 南京</p>
+					<p><%=u.getNickname()%></p>
+					<p style="font-size: 10px;font-weight: normal;"><%=u.getSex()%> <%=u.getCountry()%> <%=u.getProvince()%> <%=u.getCity()%></p>
 				</div>
 			</div>
 			<ul data-role="listview" style="margin-top: 10px;">

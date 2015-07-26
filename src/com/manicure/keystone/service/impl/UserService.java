@@ -176,7 +176,8 @@ public class UserService extends BaseService implements IUserService {
 		String url = URL_USER_GET_INFO.replace("ACCESS_TOKEN", accessToken).replace("OPENID", openId);
 		// 获取用户信息
 		String response = HttpClientUtil.doHttpsPost(url, null, "UTF-8");
-		logger.info(response);
+		
+				
 		JSONObject jsonObject = JSONObject.fromObject(response);
 
 		// if (null != jsonObject) {
