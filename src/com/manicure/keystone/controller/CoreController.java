@@ -14,7 +14,8 @@ import com.manicure.base.controller.BaseController;
 import com.manicure.keystone.service.impl.CoreService;
 
 /**
- * @author Barrie
+ * 
+ * @author Administrator
  *
  */
 @Controller
